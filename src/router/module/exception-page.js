@@ -1,3 +1,6 @@
+import { h } from "vue";
+import { WarningOutlined } from "@ant-design/icons-vue";
+
 const routes = [
   {
     path: "/exception-page",
@@ -5,7 +8,7 @@ const routes = [
     redirect: "/exception-page/not-found",
     meta: {
       title: "异常页",
-      icon: "warning",
+      icon: () => h(WarningOutlined),
       i18n: "exceptionPage",
       role: ["admin"],
     },

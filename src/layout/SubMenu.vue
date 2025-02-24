@@ -1,10 +1,9 @@
 <template>
   <a-sub-menu :key="props.menuInfo.path">
+    <template #icon v-if="props.menuInfo?.meta?.icon">
+      <component :is="props.menuInfo.meta.icon" />
+    </template>
     <template #title>
-      <a-icon
-        v-if="props.menuInfo?.meta?.icon"
-        :type="props.menuInfo.meta.icon"
-      />
       <span v-if="!props.collapsed">
         {{
           props.menuInfo.meta?.i18n
@@ -14,9 +13,11 @@
       </span>
     </template>
     <template v-for="item in props.menuInfo.children">
-      <template v-if="!item.hideInMenu" :key="item.path">
-        <a-menu-item v-if="!item.children">
-          <a-icon v-if="item.meta?.icon" :type="item.meta.icon" />
+      <template v-if="!item.hideInMenu">
+        <a-menu-item v-if="!item.children" :key="item.path">
+          <template #icon v-if="item.meta?.icon">
+            <component :is="item.meta.icon" />
+          </template>
           <span v-if="!props.collapsed">
             {{ item.meta?.i18n ? $t(item.meta.i18n) : item.meta?.title }}
           </span>
@@ -28,5 +29,5 @@
 </template>
 
 <script setup>
-const props = defineProps(['menuInfo', 'collapsed'])
+const props = defineProps(["menuInfo", "collapsed"]);
 </script>

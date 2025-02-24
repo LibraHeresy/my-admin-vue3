@@ -1,3 +1,6 @@
+import { h } from "vue";
+import { BulbOutlined } from "@ant-design/icons-vue";
+
 const routes = [
   {
     path: "/example-page",
@@ -5,7 +8,7 @@ const routes = [
     redirect: "/example-page/list-page",
     meta: {
       title: "示例页",
-      icon: "bulb",
+      icon: () => h(BulbOutlined),
       i18n: "examplePage",
       role: ["admin"],
     },

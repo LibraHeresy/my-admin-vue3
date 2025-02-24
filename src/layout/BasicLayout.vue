@@ -16,7 +16,7 @@
               color: theme === 'dark' ? '#fff' : '#000',
             }"
           >
-            My-Admin-Vue2
+            My-Admin-Vue3
           </div>
         </template>
       </div>
@@ -28,8 +28,11 @@
         @select="handleMenuClick"
       >
         <template v-for="item in menus">
-          <template v-if="!item.hideInMenu" :key="item.path">
-            <a-menu-item v-if="!item.children">
+          <template v-if="!item.hideInMenu">
+            <a-menu-item v-if="!item.children" :key="item.path">
+              <template #icon v-if="item.meta?.icon">
+                <component :is="item.meta.icon" />
+              </template>
               <span v-if="!collapsed">{{ getTitle(item) }}</span>
             </a-menu-item>
             <SubMenu v-else :menu-info="item" :collapsed="collapsed" />
@@ -113,7 +116,7 @@
 </template>
 <script setup>
 import SubMenu from "./SubMenu.vue";
-import { ref, watch, onMounted } from "vue";
+import { ref, watch, h } from "vue";
 import { storeToRefs } from "pinia";
 import { useThemeStore } from "@/store/theme";
 import { useRoute, useRouter } from "vue-router";
@@ -285,7 +288,7 @@ const logout = () => {
 .dropdown-icon {
   font-size: 18px;
   line-height: 64px;
-  padding-left: 28px;
+  padding: 0px 14px;
   cursor: pointer;
   transition: color 0.3s;
 }

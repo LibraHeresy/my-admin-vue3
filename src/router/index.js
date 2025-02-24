@@ -3,6 +3,8 @@ import BasicLayout from "@/layout/BasicLayout.vue";
 import ComponentRepository from "./module/example-page";
 import ExceptionPage from "./module/exception-page";
 import Workbenches from "./module/workbenches";
+import { h } from "vue";
+import { SettingOutlined } from "@ant-design/icons-vue";
 
 const routes = [
   {
@@ -23,12 +25,12 @@ const routes = [
         name: "MySetting",
         meta: {
           title: "个人设置",
-          icon: "setting",
+          icon: () => h(SettingOutlined),
           i18n: "personalSettings",
         },
         component: () =>
           import(
-            /* webpackChunkName: "exception-page" */ "@/views/Setting/MySetting.vue"
+            /* webpackChunkName: "my-setting" */ "@/views/Setting/MySetting.vue"
           ),
       },
     ],
