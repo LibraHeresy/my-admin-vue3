@@ -25,50 +25,37 @@
   </div>
 </template>
 
-<script>
-import ColorPicker from "@/components/ColorPicker";
-import { mapState, mapMutations } from "vuex";
+<script setup>
+import ColorPicker from "@/components/ColorPicker.vue";
+import { storeToRefs } from "pinia";
+import { useThemeStore } from "@/store/theme";
+const themeStore = useThemeStore();
+const { theme } = storeToRefs(themeStore);
 
-export default {
-  name: "CustomSetting",
-  components: {
-    ColorPicker,
-  },
-  data() {
-    return {
-      themeColor: "#ffffff",
-    };
-  },
-  computed: {
-    ...mapState("theme", ["theme"]),
-  },
-  methods: {
-    ...mapMutations("theme", ["setTheme"]),
-    handleSwitchChange(checked) {
-      if (checked) {
-        this.setTheme("dark");
-      } else {
-        this.setTheme("light");
-      }
-    },
-    updateThemeColor(color) {
-      if (window.less) {
-        window.less
-          .modifyVars({
-            "@primary-color": color, // 新的主题色
-          })
-          .then(() => {
-            console.log("Theme changed successfully");
-            window.less.refreshStyles(); //好像可有可无
-          })
-          .catch((error) => {
-            console.error("Failed to change theme", error);
-          });
-      } else {
-        console.error("Less is not loaded correctly");
-      }
-    },
-  },
+const handleSwitchChange = (checked) => {
+  if (checked) {
+    themeStore.setTheme("dark");
+  } else {
+    themeStore.setTheme("light");
+  }
+};
+
+const updateThemeColor = (color) => {
+  if (window.less) {
+    window.less
+      .modifyVars({
+        "@primary-color": color, // 新的主题色
+      })
+      .then(() => {
+        console.log("Theme changed successfully");
+        window.less.refreshStyles(); //好像可有可无
+      })
+      .catch((error) => {
+        console.error("Failed to change theme", error);
+      });
+  } else {
+    console.error("Less is not loaded correctly");
+  }
 };
 </script>
 

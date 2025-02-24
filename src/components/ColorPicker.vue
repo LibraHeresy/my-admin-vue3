@@ -20,35 +20,33 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "ColorPicker",
-  props: {
-    defaultValue: {
-      type: String,
-      default: "#ffffff",
-    },
+<script setup>
+import { ref, onMounted, defineEmits, defineProps } from "vue";
+
+const props = defineProps({
+  defaultValue: {
+    type: String,
+    default: "#ffffff",
   },
-  data() {
-    return {
-      color: "#ffffff",
-    };
-  },
-  mounted() {
-    if (this.defaultValue) {
-      this.color = this.defaultValue;
-    }
-  },
-  methods: {
-    handleClick() {
-      const dom = document.getElementById("color-picker-input");
-      dom.click();
-    },
-    handleInput(e) {
-      this.color = e.target.value;
-      this.$emit("change", this.color);
-    },
-  },
+});
+
+const emit = defineEmits(["change"]);
+
+let color = ref("#ffffff");
+
+onMounted(() => {
+  if (props.defaultValue) {
+    color.value = props.defaultValue;
+  }
+});
+
+const handleClick = () => {
+  const dom = document.getElementById("color-picker-input");
+  dom.click();
+};
+const handleInput = (e) => {
+  color.value = e.target.value;
+  emit("change", color.value);
 };
 </script>
 

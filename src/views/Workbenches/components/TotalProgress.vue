@@ -17,6 +17,7 @@
 
 <script setup>
 import MyCard from "./MyCard.vue";
+import { defineProps } from "vue";
 
 const props = defineProps({
   info: {

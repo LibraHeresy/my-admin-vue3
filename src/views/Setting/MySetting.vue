@@ -9,7 +9,7 @@
       @click="handleMenuSelect"
     >
       <a-menu-item v-for="item in menus" :key="item.key">
-        <a-icon :type="item.icon" />
+        <component :is="item.icon" />
         {{ item.title }}
       </a-menu-item>
     </a-menu>
@@ -20,47 +20,37 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import PersonInfo from "./components/PersonInfo.vue";
 import CustomSetting from "./components/CustomSetting.vue";
+import { SettingOutlined, UserOutlined } from "@ant-design/icons-vue"
 
-export default {
-  name: "MySetting",
-  components: {
-    PersonInfo,
-    CustomSetting,
+import { ref, computed, h } from "vue";
+
+let mode = ref("inline");
+let theme = ref("light");
+let activeKey = ref("1");
+let menus = [
+  {
+    key: "1",
+    icon: () => h(UserOutlined),
+    title: "个人信息",
+    components: () => h(PersonInfo),
   },
-  data() {
-    return {
-      mode: "inline",
-      theme: "light",
-      activeKey: "1",
-      menus: [
-        {
-          key: "1",
-          icon: "user",
-          title: "个人信息",
-          components: "PersonInfo",
-        },
-        {
-          key: "2",
-          icon: "setting",
-          title: "自定义设置",
-          components: "CustomSetting",
-        },
-      ],
-    };
+  {
+    key: "2",
+    icon: () => h(SettingOutlined),
+    title: "自定义设置",
+    components: () => h(CustomSetting),
   },
-  computed: {
-    menu() {
-      return this.menus.find((item) => item.key === this.activeKey) || {};
-    },
-  },
-  methods: {
-    handleMenuSelect(e) {
-      this.activeKey = e.key;
-    },
-  },
+];
+
+const menu = computed(() => {
+  return menus.find((item) => item.key === activeKey.value);
+});
+
+const handleMenuSelect = (e) => {
+  activeKey.value = e.key;
 };
 </script>
 

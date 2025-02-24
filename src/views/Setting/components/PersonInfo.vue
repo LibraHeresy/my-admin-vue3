@@ -11,14 +11,14 @@
       <template v-if="isEdit">
         <a-form-item label="昵称" prop="nickname">
           <a-input
-            v-model="ruleForm.nickname"
+            v-model:value="ruleForm.nickname"
             placeholder="请输入昵称"
             :maxLength="20"
           />
         </a-form-item>
         <a-form-item label="简介" prop="profile">
           <a-textarea
-            v-model="ruleForm.profile"
+            v-model:value="ruleForm.profile"
             style="height: 100px"
             placeholder="请输入简介"
             :maxLength="500"
@@ -26,7 +26,7 @@
         </a-form-item>
         <a-form-item label="邮箱" prop="email">
           <a-input
-            v-model="ruleForm.email"
+            v-model:value="ruleForm.email"
             placeholder="请输入邮箱"
             :maxLength="150"
           />
@@ -61,7 +61,7 @@
   </div>
 </template>
 
-<script>
+<script setup>
 class CreateInfo {
   constructor() {
     this.nickname = "战斗机"; // 昵称
@@ -78,72 +78,69 @@ class CreateRuleForm {
   }
 }
 
-export default {
-  name: "PersonInfo",
-  data() {
-    function isValidEmail(email) {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      return emailRegex.test(email);
-    }
-    let checkEmail = (rule, value, callback) => {
-      if (!isValidEmail(value)) {
-        return callback(new Error("请输入正确的邮箱地址"));
-      } else {
-        callback();
-      }
-    };
+import { ref, reactive, useTemplateRef, toRaw } from "vue";
 
-    return {
-      layout: {
-        labelCol: { span: 4 },
-        wrapperCol: { span: 24 },
-      },
-      info: new CreateInfo(),
-      ruleForm: new CreateRuleForm(),
-      rules: {
-        nickname: [
-          {
-            required: true,
-            message: "请输入昵称",
-            trigger: "change",
-          },
-        ],
-        profile: [
-          {
-            required: true,
-            message: "请输入简介",
-            trigger: "change",
-          },
-        ],
-        email: [
-          {
-            validator: checkEmail,
-            trigger: "change",
-          },
-        ],
-      },
-      isEdit: false,
-    };
-  },
-  methods: {
-    toEdit() {
-      this.isEdit = true;
-      this.ruleForm = { ...this.info };
+function isValidEmail(email) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
+let checkEmail = (rule, value, callback) => {
+  if (!isValidEmail(value)) {
+    return callback(new Error("请输入正确的邮箱地址"));
+  } else {
+    callback();
+  }
+};
+
+const layout = {
+  labelCol: { span: 4 },
+  wrapperCol: { span: 24 },
+};
+
+let info = reactive(new CreateInfo());
+let ruleForm = reactive(new CreateRuleForm());
+
+const rules = {
+  nickname: [
+    {
+      required: true,
+      message: "请输入昵称",
+      trigger: "change",
     },
-    onSubmit() {
-      this.$refs.refRuleForm.validate((valid) => {
-        if (valid) {
-          this.isEdit = false;
-          this.info = { ...this.ruleForm };
-        }
-      });
+  ],
+  profile: [
+    {
+      required: true,
+      message: "请输入简介",
+      trigger: "change",
     },
-    onCancel() {
-      this.$refs.refRuleForm.resetFields();
-      this.isEdit = false;
-      this.ruleForm = { ...this.info };
+  ],
+  email: [
+    {
+      validator: checkEmail,
+      trigger: "change",
     },
-  },
+  ],
+};
+let isEdit = ref(false);
+
+const toEdit = () => {
+  isEdit.value = true;
+  ruleForm = { ...toRaw(info) };
+};
+
+const refRuleForm = useTemplateRef("refRuleForm");
+const onSubmit = () => {
+  refRuleForm.value.validate().then(() => {
+    isEdit.value = false;
+    info = { ...toRaw(ruleForm) };
+  });
+};
+const onCancel = () => {
+  refRuleForm.value.resetFields();
+  isEdit.value = false;
+  ruleForm = { ...toRaw(info) };
 };
 </script>
 

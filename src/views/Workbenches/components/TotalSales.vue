@@ -21,7 +21,7 @@
 
 <script setup>
 import MyCard from "./MyCard.vue";
-import { computed } from "vue";
+import { computed, defineProps } from "vue";
 import { CaretUpOutlined, CaretDownOutlined } from "@ant-design/icons-vue";
 
 const props = defineProps({
