@@ -53,7 +53,6 @@ export default {
     },
     updateThemeColor(color) {
       if (window.less) {
-        console.log(window.less);
         window.less
           .modifyVars({
             "@primary-color": color, // 新的主题色

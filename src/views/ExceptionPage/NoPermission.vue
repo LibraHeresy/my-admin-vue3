@@ -7,18 +7,15 @@
       sub-title="Sorry, you are not authorized to access this page."
     >
       <template #extra>
-        <a-button type="primary" @click="$router.push({ path: '/' })">
+        <a-button type="primary" @click="router.push({ path: '/' })">
           Back Home
         </a-button>
       </template>
     </a-result>
   </a-card>
 </template>
-<script>
-export default {
-  data() {
-    return {};
-  },
-};
+<script setup>
+import { useRouter } from "vue-router";
+const router = useRouter();
 </script>
 <style lang="less" scoped></style>

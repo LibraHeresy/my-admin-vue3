@@ -1,5 +1,6 @@
 import { h } from "vue";
 import { WarningOutlined } from "@ant-design/icons-vue";
+import PageView from "@/layout/PageView.vue"
 
 const routes = [
   {
@@ -12,9 +13,7 @@ const routes = [
       i18n: "exceptionPage",
       role: ["admin"],
     },
-    component: {
-      render: (h) => h("router-view"),
-    },
+    component: PageView,
     children: [
       {
         path: "/exception-page/no-permission",

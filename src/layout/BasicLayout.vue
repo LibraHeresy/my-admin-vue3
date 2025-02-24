@@ -61,7 +61,7 @@
                 <a-menu-item>
                   <a
                     href="javascript:;"
-                    @click="() => $router.push({ path: '/setting' })"
+                    @click="() => router.push({ path: '/setting' })"
                   >
                     个人设置
                   </a>
@@ -211,7 +211,7 @@ getBreadcrumb();
 
 // 菜单路由跳转
 const handleMenuClick = (e) => {
-  if (e.key === router.currentRoute.path) return;
+  if (e.key === router.currentRoute.value.path) return;
   router.push({
     path: e.key,
   });
