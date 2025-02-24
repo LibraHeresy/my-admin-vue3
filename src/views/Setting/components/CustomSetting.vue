@@ -4,7 +4,7 @@
       <a-list-item>
         <a-list-item-meta title="风格配色" description="整体风格配色设置">
         </a-list-item-meta>
-        <template slot="extra">
+        <template #extra>
           <a-switch
             checked-children="暗色"
             un-checked-children="浅色"
@@ -17,7 +17,7 @@
       <a-list-item>
         <a-list-item-meta title="主题色" description="页面风格配色设置">
         </a-list-item-meta>
-        <template slot="extra">
+        <template #extra>
           <ColorPicker @change="updateThemeColor" />
         </template>
       </a-list-item>

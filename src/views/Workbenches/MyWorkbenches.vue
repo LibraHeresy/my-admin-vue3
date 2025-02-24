@@ -1,94 +1,56 @@
 <template>
-  <div class="my-workbenches">
+  <div class="my-workbenches" v-if="loading">
     <div class="desc-cards">
-      <a-skeleton
-        class="desc-card"
-        :class="{
-          skeleton: loading,
-        }"
-        active
-        :loading="loading"
-      >
-        <TotalSales class="desc-card" :info="info" />
-      </a-skeleton>
-      <a-skeleton
-        class="desc-card"
-        :class="{
-          skeleton: loading,
-        }"
-        active
-        :loading="loading"
-      >
-        <TotalVisitors ref="refTotalVisitors" class="desc-card" :info="info" />
-      </a-skeleton>
-      <a-skeleton
-        class="desc-card"
-        :class="{
-          skeleton: loading,
-        }"
-        active
-        :loading="loading"
-      >
-        <TotalOrders ref="refTotalOrders" class="desc-card" :info="info" />
-      </a-skeleton>
-      <a-skeleton
-        class="desc-card"
-        :class="{
-          skeleton: loading,
-        }"
-        active
-        :loading="loading"
-      >
-        <TotalProgress class="desc-card" :info="info" />
-      </a-skeleton>
+      <div class="desc-card skeleton">
+        <a-skeleton :active="true" :loading="loading"> </a-skeleton>
+      </div>
+      <div class="desc-card skeleton">
+        <a-skeleton :active="true" :loading="loading"> </a-skeleton>
+      </div>
+      <div class="desc-card skeleton">
+        <a-skeleton :active="true" :loading="loading"> </a-skeleton>
+      </div>
+      <div class="desc-card skeleton">
+        <a-skeleton :active="true" :loading="loading"> </a-skeleton>
+      </div>
     </div>
 
-    <a-skeleton
-      class="sales-data-card"
-      :class="{
-        skeleton: loading,
-      }"
-      active
-      :loading="loading"
-    >
-      <SalesDataCard class="sales-data-card" />
-    </a-skeleton>
+    <div class="sales-data-card skeleton">
+      <a-skeleton :active="true" :loading="loading"> </a-skeleton>
+    </div>
 
     <div class="info-cards">
-      <a-skeleton
-        class="info-card"
-        :class="{
-          skeleton: loading,
-        }"
-        active
-        :loading="loading"
-      >
-        <OnlineTopSearch class="info-card" />
-      </a-skeleton>
-      <a-skeleton
-        class="info-card"
-        :class="{
-          skeleton: loading,
-        }"
-        active
-        :loading="loading"
-      >
-        <ProportionOfSales class="info-card" />
-      </a-skeleton>
+      <div class="info-card skeleton">
+        <a-skeleton :active="true" :loading="loading"> </a-skeleton>
+      </div>
+      <div class="info-card skeleton">
+        <a-skeleton
+          class="info-card skeleton"
+          :active="true"
+          :loading="loading"
+        >
+        </a-skeleton>
+      </div>
+    </div>
+  </div>
+  <div class="my-workbenches" v-else>
+    <div class="desc-cards">
+      <TotalSales class="desc-card" :info="info" />
+      <TotalVisitors ref="refTotalVisitors" class="desc-card" :info="info" />
+      <TotalOrders ref="refTotalOrders" class="desc-card" :info="info" />
+      <TotalProgress class="desc-card" :info="info" />
+    </div>
+
+    <SalesDataCard class="sales-data-card" />
+
+    <div class="info-cards">
+      <OnlineTopSearch class="info-card" />
+      <ProportionOfSales class="info-card" />
     </div>
   </div>
 </template>
 
-<script>
-import SalesDataCard from "./components/SalesDataCard.vue";
-import OnlineTopSearch from "./components/OnlineTopSearch.vue";
-import ProportionOfSales from "./components/ProportionOfSales.vue";
-import { getWorkbenchesData } from "@/api/common";
-import TotalSales from "./components/TotalSales.vue";
-import TotalVisitors from "./components/TotalVisitors.vue";
-import TotalOrders from "./components/TotalOrders.vue";
-import TotalProgress from "./components/TotalProgress.vue";
-
+<script setup>
 class CreateInfo {
   constructor() {
     // 销售总额
@@ -104,7 +66,7 @@ class CreateInfo {
     // 今日访客数
     this.todayVisitors = 93036;
     // 7天访客数
-    (this.past7daysVisitors = [
+    this.past7daysVisitors = [
       {
         visitors: 85738,
       },
@@ -126,9 +88,9 @@ class CreateInfo {
       {
         visitors: 18719,
       },
-    ]),
-      // 总订单数
-      (this.totalOrders = 36394641);
+    ];
+    // 总订单数
+    this.totalOrders = 36394641;
     // 今日订单数
     this.todayOrders = 22320;
     // 7天订单数
@@ -162,50 +124,46 @@ class CreateInfo {
   }
 }
 
-export default {
-  name: "MyWorkbenches",
-  components: {
-    SalesDataCard,
-    OnlineTopSearch,
-    ProportionOfSales,
-    TotalSales,
-    TotalVisitors,
-    TotalOrders,
-    TotalProgress,
-  },
-  data() {
-    return {
-      info: new CreateInfo(),
-      loading: true,
-    };
-  },
-  mounted() {
-    getWorkbenchesData({}).then((res) => {
-      if (res.code === 200) {
-        this.info = res.data;
+import { ref, reactive, useTemplateRef, onMounted } from "vue";
+import SalesDataCard from "./components/SalesDataCard.vue";
+import OnlineTopSearch from "./components/OnlineTopSearch.vue";
+import ProportionOfSales from "./components/ProportionOfSales.vue";
+import { getWorkbenchesData } from "@/api/common";
+import TotalSales from "./components/TotalSales.vue";
+import TotalVisitors from "./components/TotalVisitors.vue";
+import TotalOrders from "./components/TotalOrders.vue";
+import TotalProgress from "./components/TotalProgress.vue";
 
-        setTimeout(() => {
-          this.renderChart();
-        });
-      }
-    });
+let info = reactive(new CreateInfo());
+let loading = ref(true);
 
+onMounted(() => {
+  getWorkbenchesData({}).then((res) => {
+    if (res.code === 200) {
+      info = res.data;
+
+      setTimeout(() => {
+        renderChart();
+      });
+    }
+  });
+
+  setTimeout(() => {
+    loading.value = false;
+  }, 1500);
+});
+
+const refTotalVisitors = useTemplateRef("refTotalVisitors");
+const refTotalOrders = useTemplateRef("refTotalOrders");
+const renderChart = () => {
+  if (refTotalVisitors.value && refTotalOrders.value) {
+    refTotalVisitors.value.renderChart();
+    refTotalOrders.value.renderChart();
+  } else {
     setTimeout(() => {
-      this.loading = false;
-    }, 1500);
-  },
-  methods: {
-    renderChart() {
-      if (this.$refs.refTotalVisitors && this.$refs.refTotalOrders) {
-        this.$refs.refTotalVisitors.renderChart();
-        this.$refs.refTotalOrders.renderChart();
-      } else {
-        setTimeout(() => {
-          this.renderChart();
-        });
-      }
-    },
-  },
+      renderChart();
+    });
+  }
 };
 </script>
 

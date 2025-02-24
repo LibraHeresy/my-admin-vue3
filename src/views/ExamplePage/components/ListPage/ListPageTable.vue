@@ -42,10 +42,10 @@
       :loading="loading"
       rowKey="orderNo"
     >
-      <template slot="index" slot-scope="text, record, index">
+      <template #index slot-scope="text, record, index">
         <span> {{ index + 1 }} </span>
       </template>
-      <template slot="orderNo" slot-scope="text, record">
+      <template #orderNo slot-scope="text, record">
         <a @click="toDetailPage(record)"> {{ text }} </a>
       </template>
     </a-table>

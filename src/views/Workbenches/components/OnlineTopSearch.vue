@@ -17,10 +17,14 @@
               pageSize: 5, // 每页显示 10 条
             }"
           >
-            <span slot="range" slot-scope="text">
-              {{ text }}
-              <a-icon type="caret-up" style="color: red" />
-            </span>
+            <template #bodyCell="{ column, text }">
+              <template v-if="column.dataIndex === 'range'">
+                <span slot-scope="text">
+                  {{ text }}
+                  <CaretUpOutlined style="color: red" />
+                </span>
+              </template>
+            </template>
           </a-table>
         </div>
       </div>
@@ -28,7 +32,7 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import * as echarts from "echarts/core";
 import { GridComponent } from "echarts/components";
 import { LineChart } from "echarts/charts";
@@ -38,164 +42,153 @@ echarts.use([GridComponent, LineChart, CanvasRenderer, UniversalTransition]);
 
 import moment from "moment";
 
-export default {
-  name: "OnlineTopSearch",
-  data() {
-    const columns = [
-      {
-        title: "排行",
-        dataIndex: "rank",
-        key: "rank",
-        width: "80px",
-      },
-      {
-        title: "关键词",
-        dataIndex: "keyword",
-        key: "keyword",
-      },
-      {
-        title: "用户数",
-        dataIndex: "users",
-        key: "users",
-        ellipsis: true,
-      },
-      {
-        title: "每日上升趋势",
-        dataIndex: "range",
-        key: "range",
-        ellipsis: true,
-        align: "right",
-        scopedSlots: { customRender: "range" },
-      },
-    ];
+import { reactive, onMounted, onBeforeUnmount } from "vue";
 
-    let data = [
-      {
-        key: "1",
-        rank: "1",
-        keyword: "搜索",
-        users: "1,000",
-        range: "+10%",
-      },
-      {
-        key: "2",
-        rank: "2",
-        keyword: "搜索",
-        users: "1,000",
-        range: "+10%",
-      },
-      {
-        key: "3",
-        rank: "3",
-        keyword: "搜索",
-        users: "1,000",
-        range: "+10%",
-      },
-      {
-        key: "4",
-        rank: "4",
-        keyword: "搜索",
-        users: "1,000",
-        range: "+10%",
-      },
-      {
-        key: "5",
-        rank: "5",
-        keyword: "搜索",
-        users: "1,000",
-        range: "+10%",
-      },
-    ];
+import { CaretUpOutlined } from "@ant-design/icons-vue";
 
-    data = data.concat(
-      data.map((item) => ({
-        ...item,
-        rank: +item.rank + 5,
-      }))
-    );
-
-    const today = moment();
-    const chartOption = {
-      tooltip: {
-        trigger: "axis",
-        axisPointer: {
-          type: "cross",
-        },
-      },
-      grid: {
-        left: "60px", // 距离容器左侧的距离
-        right: "20px", // 距离容器右侧的距离
-        top: "10px", // 距离容器顶部的距离
-        bottom: "40px", // 距离容器底部的距离
-      },
-      xAxis: {
-        type: "category",
-        boundaryGap: false,
-        data: [
-          today.subtract(14, "days").format("YYYY-MM-DD"),
-          today.subtract(13, "days").format("YYYY-MM-DD"),
-          today.subtract(12, "days").format("YYYY-MM-DD"),
-          today.subtract(11, "days").format("YYYY-MM-DD"),
-          today.subtract(10, "days").format("YYYY-MM-DD"),
-          today.subtract(9, "days").format("YYYY-MM-DD"),
-          today.subtract(8, "days").format("YYYY-MM-DD"),
-          today.subtract(7, "days").format("YYYY-MM-DD"),
-          today.subtract(6, "days").format("YYYY-MM-DD"),
-          today.subtract(5, "days").format("YYYY-MM-DD"),
-          today.subtract(4, "days").format("YYYY-MM-DD"),
-          today.subtract(3, "days").format("YYYY-MM-DD"),
-          today.subtract(2, "days").format("YYYY-MM-DD"),
-          today.subtract(1, "days").format("YYYY-MM-DD"),
-        ],
-      },
-      yAxis: {
-        type: "value",
-      },
-      series: [
-        {
-          smooth: 0.6,
-          symbol: "none",
-          data: [
-            820, 932, 901, 934, 1290, 1330, 1320, 932, 901, 934, 1290, 1290,
-            1330, 1320, 932,
-          ],
-          type: "line",
-          areaStyle: {},
-        },
-      ],
-    };
-    return {
-      data,
-      columns,
-      chartOption,
-      myCharts: [],
-    };
+const columns = [
+  {
+    title: "排行",
+    dataIndex: "rank",
+    key: "rank",
+    width: "80px",
   },
-  mounted() {
-    setTimeout(() => {
-      this.renderChart();
-    });
+  {
+    title: "关键词",
+    dataIndex: "keyword",
+    key: "keyword",
   },
-  methods: {
-    renderChart() {
-      if (this.myCharts.length < 1 || !this.myCharts.every((item) => item)) {
-        const chartDomOne = document.getElementById(
-          "online-top-search-chart-one"
-        );
-        this.myCharts[0] = echarts.init(chartDomOne);
-      }
-      this.myCharts[0].setOption(this.chartOption);
+  {
+    title: "用户数",
+    dataIndex: "users",
+    key: "users",
+    ellipsis: true,
+  },
+  {
+    title: "每日上升趋势",
+    dataIndex: "range",
+    key: "range",
+    ellipsis: true,
+    align: "right",
+  },
+];
+
+let data = [
+  {
+    key: "1",
+    rank: "1",
+    keyword: "搜索",
+    users: "1,000",
+    range: "+10%",
+  },
+  {
+    key: "2",
+    rank: "2",
+    keyword: "搜索",
+    users: "1,000",
+    range: "+10%",
+  },
+  {
+    key: "3",
+    rank: "3",
+    keyword: "搜索",
+    users: "1,000",
+    range: "+10%",
+  },
+  {
+    key: "4",
+    rank: "4",
+    keyword: "搜索",
+    users: "1,000",
+    range: "+10%",
+  },
+  {
+    key: "5",
+    rank: "5",
+    keyword: "搜索",
+    users: "1,000",
+    range: "+10%",
+  },
+];
+data = data.concat(
+  data.map((item) => ({
+    ...item,
+    rank: +item.rank + 5,
+  }))
+);
+
+const today = moment();
+const chartOption = {
+  tooltip: {
+    trigger: "axis",
+    axisPointer: {
+      type: "cross",
     },
   },
-  beforeDestroy() {
-    // 销毁 echarts
-    this.myCharts.forEach((item) => {
-      if (item != null) {
-        item.dispose();
-      }
-    });
+  grid: {
+    left: "60px", // 距离容器左侧的距离
+    right: "20px", // 距离容器右侧的距离
+    top: "10px", // 距离容器顶部的距离
+    bottom: "40px", // 距离容器底部的距离
   },
+  xAxis: {
+    type: "category",
+    boundaryGap: false,
+    data: [
+      today.subtract(14, "days").format("YYYY-MM-DD"),
+      today.subtract(13, "days").format("YYYY-MM-DD"),
+      today.subtract(12, "days").format("YYYY-MM-DD"),
+      today.subtract(11, "days").format("YYYY-MM-DD"),
+      today.subtract(10, "days").format("YYYY-MM-DD"),
+      today.subtract(9, "days").format("YYYY-MM-DD"),
+      today.subtract(8, "days").format("YYYY-MM-DD"),
+      today.subtract(7, "days").format("YYYY-MM-DD"),
+      today.subtract(6, "days").format("YYYY-MM-DD"),
+      today.subtract(5, "days").format("YYYY-MM-DD"),
+      today.subtract(4, "days").format("YYYY-MM-DD"),
+      today.subtract(3, "days").format("YYYY-MM-DD"),
+      today.subtract(2, "days").format("YYYY-MM-DD"),
+      today.subtract(1, "days").format("YYYY-MM-DD"),
+    ],
+  },
+  yAxis: {
+    type: "value",
+  },
+  series: [
+    {
+      smooth: 0.6,
+      symbol: "none",
+      data: [
+        820, 932, 901, 934, 1290, 1330, 1320, 932, 901, 934, 1290, 1290, 1330,
+        1320, 932,
+      ],
+      type: "line",
+      areaStyle: {},
+    },
+  ],
 };
+
+onMounted(() => {
+  setTimeout(() => {
+    renderChart();
+  });
+});
+
+const myCharts = reactive([]);
+const renderChart = () => {
+  if (myCharts.length < 1 || !myCharts.every((item) => item)) {
+    const chartDomOne = document.getElementById("online-top-search-chart-one");
+    myCharts[0] = echarts.init(chartDomOne);
+  }
+  myCharts[0].setOption(chartOption);
+};
+
+onBeforeUnmount(() => {
+  // 销毁 echarts
+  myCharts.forEach((item) => {
+    item.dispose();
+  });
+});
 </script>
 
 <style lang="less" scoped>

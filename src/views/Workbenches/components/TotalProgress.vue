@@ -1,6 +1,6 @@
 <template>
   <MyCard title="完成进度">
-    <template slot="number">
+    <template #number>
       <span>{{ info.totalProgress }}%</span>
     </template>
     <a-progress
@@ -9,31 +9,21 @@
       :show-info="false"
       strokeColor="#748EDE"
     />
-    <template slot="desc">
+    <template #desc>
       <span>今日进度 {{ info.todayProcess }}%</span>
     </template>
   </MyCard>
 </template>
 
-<script>
+<script setup>
 import MyCard from "./MyCard.vue";
 
-export default {
-  name: "TotalProgress",
-  components: {
-    MyCard,
+const props = defineProps({
+  info: {
+    type: Object,
+    default: () => {},
   },
-  props: {
-    info: {
-      type: Object,
-      default: () => {},
-    },
-  },
-  data() {
-    return {};
-  },
-  methods: {},
-};
+});
 </script>
 
 <style lang="less" scoped></style>

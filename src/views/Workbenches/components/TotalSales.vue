@@ -1,48 +1,39 @@
 <template>
   <MyCard title="销售总额">
-    <template slot="number">
+    <template #number>
       <span>￥{{ info.totalSales.toLocaleString() }}</span>
     </template>
     <div style="margin-bottom: 10px; display: flex">
       <div>
         <span style="font-size: 14px"> 新增 {{ salesIncreasePercent }}% </span>
-        <a-icon style="color: red; font-size: 14px" type="caret-up" />
+        <CaretUpOutlined style="color: red; font-size: 14px" />
       </div>
       <div style="margin-left: 24px">
         <span style="font-size: 14px"> 下降 {{ salesIncreasePercent }}% </span>
-        <a-icon style="color: green; font-size: 14px" type="caret-down" />
+        <CaretDownOutlined style="color: green; font-size: 14px" />
       </div>
     </div>
-    <template slot="desc">
+    <template #desc>
       <span>每日销售额 ￥{{ info.todaySales.toLocaleString() }}</span>
     </template>
   </MyCard>
 </template>
 
-<script>
+<script setup>
 import MyCard from "./MyCard.vue";
+import { computed } from "vue";
+import { CaretUpOutlined, CaretDownOutlined } from "@ant-design/icons-vue";
 
-export default {
-  name: "TotalSales",
-  components: {
-    MyCard,
+const props = defineProps({
+  info: {
+    type: Object,
+    default: () => {},
   },
-  props: {
-    info: {
-      type: Object,
-      default: () => {},
-    },
-  },
-  data() {
-    return {};
-  },
-  computed: {
-    salesIncreasePercent() {
-      return ((this.info.todaySales / this.info.totalSales) * 100).toFixed(2);
-    },
-  },
-  methods: {},
-};
+});
+
+const salesIncreasePercent = computed(() => {
+  return ((props.info.todaySales / props.info.totalSales) * 100).toFixed(2);
+});
 </script>
 
 <style lang="less" scoped></style>

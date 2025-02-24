@@ -49,7 +49,7 @@
         </a-form-item>
       </a-form>
     </div>
-    <template slot="footer">
+    <template #footer>
       <a-button key="back" @click="handleCancel"> 关闭 </a-button>
       <a-button
         key="submit"

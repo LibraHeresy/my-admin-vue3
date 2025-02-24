@@ -3,8 +3,8 @@
     <div class="my-card_header">
       <div class="my-card_header-title">{{ title }}</div>
       <a-tooltip>
-        <template slot="title"> {{ introduce }} </template>
-        <a-icon class="my-card_header-icon" type="info-circle" />
+        <template #title> {{ introduce }} </template>
+        <InfoCircleOutlined class="my-card_header-icon" />
       </a-tooltip>
     </div>
     <div class="my-card_content">
@@ -21,32 +21,27 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "MyCard",
-  props: {
-    title: {
-      type: String,
-      default: "这是标题",
-    },
-    number: {
-      type: Number,
-      default: 0,
-    },
-    desc: {
-      type: String,
-      default: "这是描述",
-    },
-    introduce: {
-      type: String,
-      default: "这是介绍",
-    },
+<script setup>
+import { InfoCircleOutlined } from "@ant-design/icons-vue";
+
+const props = defineProps({
+  title: {
+    type: String,
+    default: "这是标题",
   },
-  data() {
-    return {};
+  number: {
+    type: String,
+    default: "0",
   },
-  methods: {},
-};
+  desc: {
+    type: String,
+    default: "这是描述",
+  },
+  introduce: {
+    type: String,
+    default: "这是介绍",
+  },
+});
 </script>
 
 <style lang="less" scoped>

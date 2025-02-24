@@ -3,7 +3,7 @@
     <a-list item-layout="horizontal">
       <a-list-item>
         <a-list-item-meta>
-          <template slot="description">
+          <template #description>
             <a-descriptions title="订单信息">
               <a-descriptions-item label="订单号">
                 {{ order.orderNo }}
@@ -26,7 +26,7 @@
       </a-list-item>
       <a-list-item>
         <a-list-item-meta>
-          <template slot="description">
+          <template #description>
             <a-descriptions title="其他信息">
               <a-descriptions-item label="工作人员">
                 {{ order.worker }}
