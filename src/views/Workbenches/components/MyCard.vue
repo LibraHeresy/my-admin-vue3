@@ -23,7 +23,6 @@
 
 <script setup>
 import { InfoCircleOutlined } from "@ant-design/icons-vue";
-import { defineProps } from "vue";
 
 const props = defineProps({
   title: {

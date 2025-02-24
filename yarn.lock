@@ -14,15 +14,7 @@
   resolved "https://registry.npmmirror.com/@ant-design/icons-svg/-/icons-svg-4.4.2.tgz"
   integrity sha512-vHbT+zJEVzllwP+CM+ul7reTEfBR0vgxFe7+lREAsAA7YGsYpboiq2sQNeQeRvh09GfQgs/GyFEvZpJ9cLXpXA==
 
-"@ant-design/icons-vue@^7.0.0":
-  version "7.0.1"
-  resolved "https://registry.npmmirror.com/@ant-design/icons-vue/-/icons-vue-7.0.1.tgz"
-  integrity sha512-eCqY2unfZK6Fe02AwFlDHLfoyEFreP6rBwAZMIJ1LugmfMiVgwWDYlp1YsRugaPtICYOabV1iWxXdP12u9U43Q==
-  dependencies:
-    "@ant-design/colors" "^6.0.0"
-    "@ant-design/icons-svg" "^4.2.1"
-
-"@ant-design/icons-vue@^7.0.1":
+"@ant-design/icons-vue@^7.0.0", "@ant-design/icons-vue@^7.0.1":
   version "7.0.1"
   resolved "https://registry.npmmirror.com/@ant-design/icons-vue/-/icons-vue-7.0.1.tgz#83de301771fadd03f3890e627314102405c31c22"
   integrity sha512-eCqY2unfZK6Fe02AwFlDHLfoyEFreP6rBwAZMIJ1LugmfMiVgwWDYlp1YsRugaPtICYOabV1iWxXdP12u9U43Q==
@@ -532,10 +524,10 @@
     scroll-into-view-if-needed "^2.2.28"
     slate-history "^0.66.0"
 
-"@wangeditor/editor-for-vue@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.npmmirror.com/@wangeditor/editor-for-vue/-/editor-for-vue-1.0.2.tgz#62674d56354319ff8dcc83db5c62cec4437ee906"
-  integrity sha512-BOENvAXJVtVXlE2X50AAvjV82YlCUeu5cbeR0cvEQHQjYtiVnJtq7HSoj85r2kTgGouI5OrpJG9BBEjSjUSPyA==
+"@wangeditor/editor-for-vue@^5.1.12":
+  version "5.1.12"
+  resolved "https://registry.yarnpkg.com/@wangeditor/editor-for-vue/-/editor-for-vue-5.1.12.tgz#f7d5f239b39cdfc01d31151488de8443fe6edc64"
+  integrity sha512-0Ds3D8I+xnpNWezAeO7HmPRgTfUxHLMd9JKcIw+QzvSmhC5xUHbpCcLU+KLmeBKTR/zffnS5GQo6qi3GhTMJWQ==
 
 "@wangeditor/editor@^5.1.23":
   version "5.1.23"

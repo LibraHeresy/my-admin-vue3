@@ -8,7 +8,7 @@
   >
     <a-form-item label="付款账户" name="paymentAccount">
       <a-select
-        v-model="ruleForm.paymentAccount"
+        v-model:value="ruleForm.paymentAccount"
         placeholder="my-admin-vue2@alipay.com"
       >
         <a-select-option value="my-admin-vue2@alipay.com">
@@ -22,15 +22,15 @@
           <a-select-option value="支付宝"> 支付宝 </a-select-option>
           <a-select-option value="微信"> 微信 </a-select-option>
         </a-select>
-        <a-input v-model="ruleForm.receiverAccount" style="width: 80%" />
+        <a-input v-model:value="ruleForm.receiverAccount" style="width: 80%" />
       </a-input-group>
     </a-form-item>
     <a-form-item label="收款人姓名" name="receiver">
-      <a-input v-model="ruleForm.receiver" :maxLength="20" />
+      <a-input v-model:value="ruleForm.receiver" :maxLength="20" />
     </a-form-item>
     <a-form-item label="转账金额" name="transferAmount">
       <a-input
-        v-model="ruleForm.transferAmount"
+        v-model:value="ruleForm.transferAmount"
         type="number"
         :maxLength="20"
       />

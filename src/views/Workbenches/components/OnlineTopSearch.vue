@@ -19,7 +19,7 @@
           >
             <template #bodyCell="{ column, text }">
               <template v-if="column.dataIndex === 'range'">
-                <span slot-scope="text">
+                <span>
                   {{ text }}
                   <CaretUpOutlined style="color: red" />
                 </span>

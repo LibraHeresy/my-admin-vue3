@@ -1,33 +1,33 @@
 <template>
-  <div class="my-workbenches" v-if="loading">
+  <div class="my-workbenches" v-if="isLoading">
     <div class="desc-cards">
       <div class="desc-card skeleton">
-        <a-skeleton :active="true" :loading="loading"> </a-skeleton>
+        <a-skeleton :active="true" :loading="isLoading"> </a-skeleton>
       </div>
       <div class="desc-card skeleton">
-        <a-skeleton :active="true" :loading="loading"> </a-skeleton>
+        <a-skeleton :active="true" :loading="isLoading"> </a-skeleton>
       </div>
       <div class="desc-card skeleton">
-        <a-skeleton :active="true" :loading="loading"> </a-skeleton>
+        <a-skeleton :active="true" :loading="isLoading"> </a-skeleton>
       </div>
       <div class="desc-card skeleton">
-        <a-skeleton :active="true" :loading="loading"> </a-skeleton>
+        <a-skeleton :active="true" :loading="isLoading"> </a-skeleton>
       </div>
     </div>
 
     <div class="sales-data-card skeleton">
-      <a-skeleton :active="true" :loading="loading"> </a-skeleton>
+      <a-skeleton :active="true" :loading="isLoading"> </a-skeleton>
     </div>
 
     <div class="info-cards">
       <div class="info-card skeleton">
-        <a-skeleton :active="true" :loading="loading"> </a-skeleton>
+        <a-skeleton :active="true" :loading="isLoading"> </a-skeleton>
       </div>
       <div class="info-card skeleton">
         <a-skeleton
           class="info-card skeleton"
           :active="true"
-          :loading="loading"
+          :loading="isLoading"
         >
         </a-skeleton>
       </div>
@@ -135,7 +135,7 @@ import TotalOrders from "./components/TotalOrders.vue";
 import TotalProgress from "./components/TotalProgress.vue";
 
 let info = reactive(new CreateInfo());
-let loading = ref(true);
+let isLoading = ref(true);
 
 onMounted(() => {
   getWorkbenchesData({}).then((res) => {
@@ -149,7 +149,7 @@ onMounted(() => {
   });
 
   setTimeout(() => {
-    loading.value = false;
+    isLoading.value = false;
   }, 1500);
 });
 

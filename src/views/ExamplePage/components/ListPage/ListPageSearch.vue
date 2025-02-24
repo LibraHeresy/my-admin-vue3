@@ -8,12 +8,18 @@
     <a-row>
       <a-col :span="8">
         <a-form-item label="订单号" name="orderNo">
-          <a-input v-model="ruleForm.orderNo" placeholder="请输入订单号" />
+          <a-input
+            v-model:value="ruleForm.orderNo"
+            placeholder="请输入订单号"
+          />
         </a-form-item>
       </a-col>
       <a-col :span="8">
         <a-form-item label="订单状态" name="orderStatus">
-          <a-select v-model="ruleForm.orderStatus" placeholder="请选择订单状态">
+          <a-select
+            v-model:value="ruleForm.orderStatus"
+            placeholder="请选择订单状态"
+          >
             <a-select-option
               v-for="item in OrderStatusDict"
               :key="item.key"
@@ -27,7 +33,10 @@
       <template v-if="advanced">
         <a-col :span="8">
           <a-form-item label="订单类型" name="orderType">
-            <a-select v-model="ruleForm.orderType" placeholder="请选择订单类型">
+            <a-select
+              v-model:value="ruleForm.orderType"
+              placeholder="请选择订单类型"
+            >
               <a-select-option
                 v-for="item in OrderTypeDict"
                 :key="item.key"
@@ -41,7 +50,7 @@
         <a-col :span="8">
           <a-form-item label="工作人员" name="worker">
             <a-input
-              v-model="ruleForm.worker"
+              v-model:value="ruleForm.worker"
               placeholder="请输入工作人员姓名"
             />
           </a-form-item>
@@ -49,7 +58,7 @@
         <a-col :span="8">
           <a-form-item label="支付渠道" name="orderPayment">
             <a-select
-              v-model="ruleForm.orderPayment"
+              v-model:value="ruleForm.orderPayment"
               placeholder="请选择支付渠道"
             >
               <a-select-option
@@ -74,7 +83,8 @@
           </a-button>
           <a @click="toggleAdvanced" style="margin-left: 8px">
             {{ advanced ? "收起" : "展开" }}
-            <a-icon :type="advanced ? 'up' : 'down'" />
+            <UpOutlined v-if="advanced" />
+            <DownOutlined v-else />
           </a>
         </span>
       </a-col>
@@ -88,6 +98,7 @@ import {
   OrderTypeDict,
   OrderPayMentDict,
 } from "../../configs/dict";
+import { UpOutlined, DownOutlined } from "@ant-design/icons-vue";
 
 class CreateRuleForm {
   constructor() {
@@ -111,22 +122,23 @@ const layout = {
   wrapperCol: { span: 17 },
 };
 
-let ruleForm = reactive(new CreateRuleForm());
+let ruleForm = ref(new CreateRuleForm());
 let advanced = ref(false);
 
 const toggleAdvanced = () => {
   advanced.value = !advanced.value;
 };
 
-const emits = defineEmits(['reset', 'search'])
+const emits = defineEmits(["reset", "search"]);
 const handleReset = () => {
-  ruleForm = new CreateRuleForm();
+  ruleForm.value = new CreateRuleForm();
   emits("reset");
 };
 const handleSearch = () => {
-  emits("search", { ...toRaw(ruleForm) });
+  emits("search", { ...ruleForm.value });
 };
 </script>
+
 <style lang="less" scoped>
 .ant-form-item {
   width: 100%;

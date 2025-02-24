@@ -21,7 +21,7 @@ import { UniversalTransition } from "echarts/features";
 import { CanvasRenderer } from "echarts/renderers";
 echarts.use([GridComponent, LineChart, CanvasRenderer, UniversalTransition]);
 
-import { ref, onBeforeUnmount, defineProps } from "vue";
+import { ref, onBeforeUnmount } from "vue";
 
 const props = defineProps({
   info: {

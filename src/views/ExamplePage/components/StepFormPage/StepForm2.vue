@@ -19,7 +19,11 @@
       <span>{{ transferInfo.transferAmount }}</span>
     </a-form-item>
     <a-form-item label="支付密码" name="paySecret">
-      <a-input v-model="ruleForm.paySecret" type="password" :maxLength="20" />
+      <a-input
+        v-model:value="ruleForm.paySecret"
+        type="password"
+        :maxLength="20"
+      />
     </a-form-item>
     <a-form-item :wrapper-col="{ span: 14, offset: 6 }">
       <a-button type="default" @click="prevStep"> 上一步 </a-button>

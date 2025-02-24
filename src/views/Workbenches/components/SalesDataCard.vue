@@ -18,7 +18,7 @@
       >
         {{ item.value }}
       </a>
-      <a-range-picker v-model="dateRange" :format="dateFormat" />
+      <a-range-picker v-model:value="dateRange" :format="dateFormat" />
     </template>
   </a-card>
 </template>
@@ -63,7 +63,7 @@ const dateList = [
 
 let dateRange = reactive([]);
 let dateFormat = "YYYY-MM-DD";
-const refSalesData = useTemplateRef('refSalesData');
+const refSalesData = useTemplateRef("refSalesData");
 const onTabChange = (key) => {
   tab.value = key;
 

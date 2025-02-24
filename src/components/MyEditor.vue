@@ -2,49 +2,57 @@
   <div style="border: 1px solid #ccc">
     <Toolbar
       style="border-bottom: 1px solid #ccc"
-      :editor="editor"
+      :editor="editorRef"
       :defaultConfig="toolbarConfig"
       :mode="mode"
     />
     <Editor
       style="height: 150px; overflow-y: hidden"
       :value="value"
-      @input="(value) => $emit('input', value)"
       :defaultConfig="editorConfig"
       :mode="mode"
       @onCreated="onCreated"
+      @onChange="handleInput"
     />
   </div>
 </template>
 
-<script>
+<script setup>
 import { Editor, Toolbar } from "@wangeditor/editor-for-vue";
+import { ref, shallowRef, onBeforeUnmount } from "vue";
+import { defineEmits } from "vue";
 
-export default {
-  components: { Editor, Toolbar },
-  props: {
-    value: {
-      type: String,
-      default: "",
-    },
-  },
-  data() {
-    return {
-      editor: null,
-      toolbarConfig: {},
-      editorConfig: { placeholder: "请输入内容..." },
-      mode: "default", // or 'simple'
-    };
-  },
-  methods: {
-    onCreated(editor) {
-      this.editor = Object.seal(editor); // 一定要用 Object.seal() ，否则会报错
-    },
-  },
-  beforeDestroy() {
-    const editor = this.editor;
-    if (editor == null) return;
-    editor.destroy(); // 组件销毁时，及时销毁编辑器
-  },
+const emits = defineEmits(["input"]);
+
+const handleInput = (value) => {
+  emits("input", value.getHtml());
 };
+
+const props = defineProps({
+  value: {
+    type: String,
+    default: "",
+  },
+});
+
+const editorRef = shallowRef();
+
+const toolbarConfig = {};
+
+const editorConfig = {
+  placeholder: "请输入内容...",
+};
+
+const mode = ref("default");
+
+const onCreated = (editor) => {
+  editorRef.value = Object.seal(editor);
+};
+
+onBeforeUnmount(() => {
+  const editor = editorRef.value;
+  if (editor) {
+    editor.destroy();
+  }
+});
 </script>

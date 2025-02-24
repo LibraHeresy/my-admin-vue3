@@ -13,10 +13,10 @@ import { useTemplateRef } from "vue";
 
 const refListPageTable = useTemplateRef("refListPageTable");
 const handleSearch = (value) => {
-  refListPageTable.handleSearch(value);
+  refListPageTable.value.handleSearch(value);
 };
 const handleReset = () => {
-  refListPageTable.handleReset();
+  refListPageTable.value.handleReset();
 };
 </script>
 
