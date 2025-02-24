@@ -5,27 +5,18 @@
   </a-card>
 </template>
 
-<script>
+<script setup>
 import ListPageSearch from "./components/ListPage/ListPageSearch.vue";
 import ListPageTable from "./components/ListPage/ListPageTable.vue";
 
-export default {
-  name: "ListPage",
-  components: {
-    ListPageSearch,
-    ListPageTable,
-  },
-  data() {
-    return {};
-  },
-  methods: {
-    handleSearch(value) {
-      this.$refs.refListPageTable.handleSearch(value);
-    },
-    handleReset() {
-      this.$refs.refListPageTable.handleReset();
-    },
-  },
+import { useTemplateRef } from "vue";
+
+const refListPageTable = useTemplateRef("refListPageTable");
+const handleSearch = (value) => {
+  refListPageTable.handleSearch(value);
+};
+const handleReset = () => {
+  refListPageTable.handleReset();
 };
 </script>
 

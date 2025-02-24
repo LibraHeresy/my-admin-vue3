@@ -30,7 +30,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["change"]);
+const emits = defineEmits(["change"]);
 
 let color = ref("#ffffff");
 
@@ -46,7 +46,7 @@ const handleClick = () => {
 };
 const handleInput = (e) => {
   color.value = e.target.value;
-  emit("change", color.value);
+  emits("change", color.value);
 };
 </script>
 

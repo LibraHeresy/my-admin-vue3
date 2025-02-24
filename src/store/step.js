@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-export const useStepStore = defineStore("step", {
+export const useStore = defineStore("step", {
   state: () => ({
     step: 0,
     transferInfo: null,

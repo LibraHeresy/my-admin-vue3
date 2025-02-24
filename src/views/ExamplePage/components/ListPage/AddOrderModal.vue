@@ -9,14 +9,14 @@
         :label-col="layout.labelCol"
         :wrapper-col="layout.wrapperCol"
       >
-        <a-form-item label="订单金额" prop="orderAmount">
+        <a-form-item label="订单金额" name="orderAmount">
           <a-input
             v-model="ruleForm.orderAmount"
             placeholder="请输入订单金额"
             type="number"
           />
         </a-form-item>
-        <a-form-item label="订单类型" prop="orderType">
+        <a-form-item label="订单类型" name="orderType">
           <a-select v-model="ruleForm.orderType" placeholder="请选择订单类型">
             <a-select-option
               v-for="item in OrderTypeDict"
@@ -27,10 +27,10 @@
             </a-select-option>
           </a-select>
         </a-form-item>
-        <a-form-item label="工作人员" prop="worker">
+        <a-form-item label="工作人员" name="worker">
           <a-input v-model="ruleForm.worker" placeholder="请输入工作人员姓名" />
         </a-form-item>
-        <a-form-item label="支付渠道" prop="orderPayment">
+        <a-form-item label="支付渠道" name="orderPayment">
           <a-select
             v-model="ruleForm.orderPayment"
             placeholder="请选择支付渠道"
@@ -44,7 +44,7 @@
             </a-select-option>
           </a-select>
         </a-form-item>
-        <a-form-item label="备注" prop="desc">
+        <a-form-item label="备注" name="desc">
           <MyEditor v-model="ruleForm.desc" />
         </a-form-item>
       </a-form>

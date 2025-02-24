@@ -28,8 +28,8 @@
 <script setup>
 import ColorPicker from "@/components/ColorPicker.vue";
 import { storeToRefs } from "pinia";
-import { useThemeStore } from "@/store/theme";
-const themeStore = useThemeStore();
+import { useStore } from "@/store/theme";
+const themeStore = useStore();
 const { theme } = storeToRefs(themeStore);
 
 const handleSwitchChange = (checked) => {

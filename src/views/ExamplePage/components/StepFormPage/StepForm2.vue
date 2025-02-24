@@ -6,19 +6,19 @@
     :label-col="labelCol"
     :wrapper-col="wrapperCol"
   >
-    <a-form-item label="付款账户" prop="paymentAccount">
+    <a-form-item label="付款账户" name="paymentAccount">
       <span>{{ transferInfo.paymentAccount }}</span>
     </a-form-item>
-    <a-form-item label="收款账户" prop="receiverAccount">
+    <a-form-item label="收款账户" name="receiverAccount">
       <span>{{ transferInfo.receiverAccount }}</span>
     </a-form-item>
-    <a-form-item label="收款人姓名" prop="receiver">
+    <a-form-item label="收款人姓名" name="receiver">
       <span>{{ transferInfo.receiver }}</span>
     </a-form-item>
-    <a-form-item label="转账金额" prop="transferAmount">
+    <a-form-item label="转账金额" name="transferAmount">
       <span>{{ transferInfo.transferAmount }}</span>
     </a-form-item>
-    <a-form-item label="支付密码" prop="paySecret">
+    <a-form-item label="支付密码" name="paySecret">
       <a-input v-model="ruleForm.paySecret" type="password" :maxLength="20" />
     </a-form-item>
     <a-form-item :wrapper-col="{ span: 14, offset: 6 }">

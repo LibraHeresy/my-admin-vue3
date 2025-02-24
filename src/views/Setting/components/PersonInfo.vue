@@ -9,14 +9,14 @@
       :wrapper-col="layout.wrapperCol"
     >
       <template v-if="isEdit">
-        <a-form-item label="昵称" prop="nickname">
+        <a-form-item label="昵称" name="nickname">
           <a-input
             v-model:value="ruleForm.nickname"
             placeholder="请输入昵称"
             :maxLength="20"
           />
         </a-form-item>
-        <a-form-item label="简介" prop="profile">
+        <a-form-item label="简介" name="profile">
           <a-textarea
             v-model:value="ruleForm.profile"
             style="height: 100px"
@@ -24,7 +24,7 @@
             :maxLength="500"
           />
         </a-form-item>
-        <a-form-item label="邮箱" prop="email">
+        <a-form-item label="邮箱" name="email">
           <a-input
             v-model:value="ruleForm.email"
             placeholder="请输入邮箱"
@@ -34,13 +34,13 @@
       </template>
 
       <template v-else>
-        <a-form-item label="昵称" prop="nickname">
+        <a-form-item label="昵称" name="nickname">
           {{ info.nickname }}
         </a-form-item>
-        <a-form-item label="简介" prop="profile">
+        <a-form-item label="简介" name="profile">
           {{ info.profile }}
         </a-form-item>
-        <a-form-item label="邮箱" prop="email">
+        <a-form-item label="邮箱" name="email">
           {{ info.email }}
         </a-form-item>
       </template>

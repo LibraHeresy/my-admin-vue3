@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-export const useOrderStore = defineStore("order", {
+export const useStore = defineStore("order", {
   state: () => ({
     order: {
       orderNo: "20200801-0003",

@@ -7,12 +7,12 @@
   >
     <a-row>
       <a-col :span="8">
-        <a-form-item label="订单号" prop="orderNo">
+        <a-form-item label="订单号" name="orderNo">
           <a-input v-model="ruleForm.orderNo" placeholder="请输入订单号" />
         </a-form-item>
       </a-col>
       <a-col :span="8">
-        <a-form-item label="订单状态" prop="orderStatus">
+        <a-form-item label="订单状态" name="orderStatus">
           <a-select v-model="ruleForm.orderStatus" placeholder="请选择订单状态">
             <a-select-option
               v-for="item in OrderStatusDict"
@@ -26,7 +26,7 @@
       </a-col>
       <template v-if="advanced">
         <a-col :span="8">
-          <a-form-item label="订单类型" prop="orderType">
+          <a-form-item label="订单类型" name="orderType">
             <a-select v-model="ruleForm.orderType" placeholder="请选择订单类型">
               <a-select-option
                 v-for="item in OrderTypeDict"
@@ -39,7 +39,7 @@
           </a-form-item>
         </a-col>
         <a-col :span="8">
-          <a-form-item label="工作人员" prop="worker">
+          <a-form-item label="工作人员" name="worker">
             <a-input
               v-model="ruleForm.worker"
               placeholder="请输入工作人员姓名"
@@ -47,7 +47,7 @@
           </a-form-item>
         </a-col>
         <a-col :span="8">
-          <a-form-item label="支付渠道" prop="orderPayment">
+          <a-form-item label="支付渠道" name="orderPayment">
             <a-select
               v-model="ruleForm.orderPayment"
               placeholder="请选择支付渠道"
@@ -81,7 +81,8 @@
     </a-row>
   </a-form>
 </template>
-<script>
+
+<script setup>
 import {
   OrderStatusDict,
   OrderTypeDict,
@@ -103,33 +104,27 @@ class CreateRuleForm {
   }
 }
 
-export default {
-  data() {
-    return {
-      OrderStatusDict,
-      OrderTypeDict,
-      OrderPayMentDict,
+import { ref, reactive, defineEmits } from "vue";
 
-      layout: {
-        labelCol: { span: 4 },
-        wrapperCol: { span: 17 },
-      },
-      ruleForm: new CreateRuleForm(),
-      advanced: false,
-    };
-  },
-  methods: {
-    toggleAdvanced() {
-      this.advanced = !this.advanced;
-    },
-    handleReset() {
-      this.ruleForm = new CreateRuleForm();
-      this.$emit("reset");
-    },
-    handleSearch() {
-      this.$emit("search", { ...this.ruleForm });
-    },
-  },
+const layout = {
+  labelCol: { span: 4 },
+  wrapperCol: { span: 17 },
+};
+
+let ruleForm = reactive(new CreateRuleForm());
+let advanced = ref(false);
+
+const toggleAdvanced = () => {
+  advanced.value = !advanced.value;
+};
+
+const emits = defineEmits(['reset', 'search'])
+const handleReset = () => {
+  ruleForm = new CreateRuleForm();
+  emits("reset");
+};
+const handleSearch = () => {
+  emits("search", { ...toRaw(ruleForm) });
 };
 </script>
 <style lang="less" scoped>

@@ -6,7 +6,7 @@
     :label-col="labelCol"
     :wrapper-col="wrapperCol"
   >
-    <a-form-item label="付款账户" prop="paymentAccount">
+    <a-form-item label="付款账户" name="paymentAccount">
       <a-select
         v-model="ruleForm.paymentAccount"
         placeholder="my-admin-vue2@alipay.com"
@@ -16,7 +16,7 @@
         </a-select-option>
       </a-select>
     </a-form-item>
-    <a-form-item label="收款账户" prop="receiverAccount">
+    <a-form-item label="收款账户" name="receiverAccount">
       <a-input-group compact>
         <a-select style="width: 20%" default-value="支付宝">
           <a-select-option value="支付宝"> 支付宝 </a-select-option>
@@ -25,10 +25,10 @@
         <a-input v-model="ruleForm.receiverAccount" style="width: 80%" />
       </a-input-group>
     </a-form-item>
-    <a-form-item label="收款人姓名" prop="receiver">
+    <a-form-item label="收款人姓名" name="receiver">
       <a-input v-model="ruleForm.receiver" :maxLength="20" />
     </a-form-item>
-    <a-form-item label="转账金额" prop="transferAmount">
+    <a-form-item label="转账金额" name="transferAmount">
       <a-input
         v-model="ruleForm.transferAmount"
         type="number"

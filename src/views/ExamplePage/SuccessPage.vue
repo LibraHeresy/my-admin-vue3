@@ -18,13 +18,13 @@
         <a-button
           key="list"
           type="primary"
-          @click="() => $router.push({ name: 'ListPage' })"
+          @click="() => router.push({ name: 'ListPage' })"
         >
           返回列表
         </a-button>
         <a-button
           key="home"
-          @click="() => $router.push({ path: '/workbenches' })"
+          @click="() => router.push({ path: '/workbenches' })"
         >
           返回工作台
         </a-button>
@@ -33,14 +33,9 @@
   </a-card>
 </template>
 
-<script>
-export default {
-  name: "SuccessPage",
-  data() {
-    return {};
-  },
-  methods: {},
-};
+<script setup>
+import { useRouter } from "vue-router"
+const router = useRouter();
 </script>
 
 <style lang="less" scoped>

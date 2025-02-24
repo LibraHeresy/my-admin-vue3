@@ -118,7 +118,7 @@
 import SubMenu from "./SubMenu.vue";
 import { ref, watch, h } from "vue";
 import { storeToRefs } from "pinia";
-import { useThemeStore } from "@/store/theme";
+import { useStore } from "@/store/theme";
 import { useRoute, useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
 import {
@@ -173,7 +173,7 @@ setMenusMap(menus);
 openKeys = [menusMap[route.path]?.parentPath || ""];
 
 // 语言切换
-const themeStore = useThemeStore();
+const themeStore = useStore();
 const { theme, localLanguage } = storeToRefs(themeStore);
 watch(localLanguage, () => {
   getBreadcrumb();

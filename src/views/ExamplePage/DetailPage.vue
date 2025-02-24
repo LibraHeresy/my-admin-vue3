@@ -45,19 +45,11 @@
   </a-card>
 </template>
 
-<script>
-import { mapState } from "vuex";
-
-export default {
-  name: "DetailPage",
-  data() {
-    return {};
-  },
-  computed: {
-    ...mapState("order", ["order"]),
-  },
-  methods: {},
-};
+<script setup>
+import { storeToRefs } from "pinia";
+import { useStore } from "@/store/order";
+const orderStore = useStore();
+const { order } = storeToRefs(orderStore);
 </script>
 
 <style lang="less" scoped></style>
