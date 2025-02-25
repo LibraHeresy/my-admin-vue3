@@ -18,7 +18,7 @@
         <a-list-item-meta title="主题色" description="页面风格配色设置">
         </a-list-item-meta>
         <template #extra>
-          <ColorPicker @change="updateThemeColor" />
+          <ColorPicker :value="color" @change="updateThemeColor" />
         </template>
       </a-list-item>
     </a-list>
@@ -30,7 +30,7 @@ import ColorPicker from "@/components/ColorPicker.vue";
 import { storeToRefs } from "pinia";
 import { useStore } from "@/store/theme";
 const themeStore = useStore();
-const { theme } = storeToRefs(themeStore);
+const { theme, color } = storeToRefs(themeStore);
 
 const handleSwitchChange = (checked) => {
   if (checked) {
@@ -41,21 +41,7 @@ const handleSwitchChange = (checked) => {
 };
 
 const updateThemeColor = (color) => {
-  if (window.less) {
-    window.less
-      .modifyVars({
-        "@primary-color": color, // 新的主题色
-      })
-      .then(() => {
-        console.log("Theme changed successfully");
-        window.less.refreshStyles(); //好像可有可无
-      })
-      .catch((error) => {
-        console.error("Failed to change theme", error);
-      });
-  } else {
-    console.error("Less is not loaded correctly");
-  }
+  themeStore.setColor(color);
 };
 </script>
 

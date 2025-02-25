@@ -13,4 +13,5 @@ export const useStore = defineStore("step", {
       this.transferInfo = data;
     },
   },
+  persist: true,
 });

@@ -116,7 +116,7 @@
 </template>
 <script setup>
 import SubMenu from "./SubMenu.vue";
-import { ref, watch, h } from "vue";
+import { ref, watch } from "vue";
 import { storeToRefs } from "pinia";
 import { useStore } from "@/store/theme";
 import { useRoute, useRouter } from "vue-router";
@@ -127,6 +127,9 @@ import {
   MenuFoldOutlined,
   UserOutlined,
 } from "@ant-design/icons-vue";
+
+// 监控 route 变化，重新获取面包屑
+const route = useRoute();
 
 // 控制菜单折叠
 let collapsed = ref(false);
@@ -142,19 +145,14 @@ watch(collapsed, (val) => {
   }
 });
 
-// 监控 route 变化，重新获取面包屑
-const route = useRoute();
-watch(
-  () => route.path,
-  () => {
-    getBreadcrumb();
-  }
-);
-
 // 获取菜单数据
 let menus = ref([]);
 let menusMap = ref({});
 const router = useRouter();
+
+router.afterEach((to, from) => {
+  getBreadcrumb();
+});
 let menuRoute =
   router.options.routes.find((item) => item.name === "menu") || {};
 menus = menuRoute?.children || [];
@@ -189,10 +187,6 @@ const getTitle = (item) => {
 
 // 渲染面包屑
 let breadcrumbs = ref([]);
-const getBreadcrumb = () => {
-  const arr = getBreadcrumbTitle(route.path);
-  breadcrumbs = [...arr.reverse()];
-};
 const getBreadcrumbTitle = (path) => {
   let breadcrumb = [];
   const ob = menusMap[path];
@@ -203,13 +197,17 @@ const getBreadcrumbTitle = (path) => {
   }
   return breadcrumb;
 };
+const getBreadcrumb = () => {
+  const arr = getBreadcrumbTitle(route.path);
+  breadcrumbs.value = [...arr.reverse()];
+};
 getBreadcrumb();
 
 watch(
   localLanguage,
   () => {
+    locale.value = localLanguage.value;
     getBreadcrumb();
-    console.log(locale.value);
   },
   { immediate: true }
 );

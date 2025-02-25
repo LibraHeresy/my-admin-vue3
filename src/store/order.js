@@ -17,4 +17,5 @@ export const useStore = defineStore("order", {
       this.order = data;
     },
   },
+  persist: true,
 });

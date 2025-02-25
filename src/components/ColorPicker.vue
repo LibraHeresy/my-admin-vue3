@@ -3,51 +3,42 @@
     <input
       id="color-picker-input"
       class="color-picker-input"
-      :value="color"
+      :value="value"
       @input="handleInput"
       type="color"
     />
     <div
       class="color-picker-box"
       :style="{
-        backgroundColor: color,
+        backgroundColor: value,
       }"
       @click="handleClick"
     />
     <div class="color-picker-text">
-      {{ color }}
+      {{ value }}
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, defineEmits } from "vue";
+import { defineEmits } from "vue";
+import { throttle } from "lodash";
 
 const props = defineProps({
-  defaultValue: {
+  value: {
     type: String,
     default: "#ffffff",
   },
 });
 
 const emits = defineEmits(["change"]);
-
-let color = ref("#ffffff");
-
-onMounted(() => {
-  if (props.defaultValue) {
-    color.value = props.defaultValue;
-  }
-});
-
 const handleClick = () => {
   const dom = document.getElementById("color-picker-input");
   dom.click();
 };
-const handleInput = (e) => {
-  color.value = e.target.value;
-  emits("change", color.value);
-};
+const handleInput = throttle((e) => {
+  emits("change", e.target.value);
+}, 100);
 </script>
 
 <style lang="less" scoped>

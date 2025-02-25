@@ -10,6 +10,11 @@ import router from "./router";
 
 // 引入状态管理
 import { createPinia } from "pinia";
+const pinia = createPinia();
+
+// 引入状态管理持久化插件
+import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
+pinia.use(piniaPluginPersistedstate);
 
 // 引入 Mock
 import "./mock/mock";
@@ -23,4 +28,4 @@ import "less";
 // 引入 i18n
 import i18n from "./language/i18n";
 
-createApp(App).use(router).use(createPinia()).use(Antd).use(i18n).mount("#app");
+createApp(App).use(router).use(pinia).use(Antd).use(i18n).mount("#app");
