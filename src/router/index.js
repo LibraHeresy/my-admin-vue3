@@ -1,4 +1,4 @@
-import { createWebHistory, createRouter } from 'vue-router'
+import { createWebHashHistory, createRouter } from 'vue-router'
 import BasicLayout from "@/layout/BasicLayout.vue";
 import ComponentRepository from "./module/example-page";
 import ExceptionPage from "./module/exception-page";
@@ -54,7 +54,7 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createWebHistory('/my-admin-vue3/'),
+  history: createWebHashHistory(),
   routes,
 });
 
