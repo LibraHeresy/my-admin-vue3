@@ -22,10 +22,13 @@ jobs:
           node-version: "20.18.3" # 根据需要选择合适的 Node.js 版本
 
       - name: Install dependencies
-        run: npm install
+        run: npm install yarn -g
+      
+      - name: Install dependencies
+        run: yarn install
 
       - name: Build project
-        run: npm run build
+        run: yarn build
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
