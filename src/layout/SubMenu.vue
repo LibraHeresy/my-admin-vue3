@@ -1,5 +1,5 @@
 <template>
-  <a-sub-menu :key="props.menuInfo.path">
+  <a-sub-menu>
     <template #icon v-if="props.menuInfo?.meta?.icon">
       <component :is="props.menuInfo.meta.icon" />
     </template>
@@ -14,7 +14,7 @@
     </template>
     <template v-for="item in props.menuInfo.children">
       <template v-if="!item.hideInMenu">
-        <a-menu-item v-if="!item.children" :key="item.path">
+        <a-menu-item v-if="!item.children" :key="`menu-${item.path}`">
           <template #icon v-if="item.meta?.icon">
             <component :is="item.meta.icon" />
           </template>
@@ -22,7 +22,7 @@
             {{ item.meta?.i18n ? $t(item.meta.i18n) : item.meta?.title }}
           </span>
         </a-menu-item>
-        <SubMenu v-else :menu-info="item" />
+        <SubMenu v-else :key="`sub-menu-${item.path}`" :menu-info="item" />
       </template>
     </template>
   </a-sub-menu>

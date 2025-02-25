@@ -152,7 +152,7 @@ const handleSubmit = () => {
       isLoading.value = false;
       visible.value = false;
       ruleForm.value.orderStatus = "待支付";
-      ruleForm.value.orderAmount = Number(ruleForm.orderAmount).toFixed(2);
+      ruleForm.value.orderAmount = Number(ruleForm.value.orderAmount).toFixed(2);
       ruleForm.value.orderDate = moment().format("YYYY-MM-DD");
       ruleForm.value.orderNo = `${moment().format("YYYYMMDD")}-${Math.floor(
         Math.random() * 7000 + 1000

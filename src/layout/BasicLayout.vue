@@ -24,18 +24,23 @@
         :theme="theme"
         mode="inline"
         :selectedKeys="[$route.path]"
-        :openKeys.sync="openKeys"
+        v-model:openKeys="openKeys"
         @select="handleMenuClick"
       >
         <template v-for="item in menus">
           <template v-if="!item.hideInMenu">
-            <a-menu-item v-if="!item.children" :key="item.path">
+            <a-menu-item v-if="!item.children" :key="`menu-${item.path}`">
               <template #icon v-if="item.meta?.icon">
                 <component :is="item.meta.icon" />
               </template>
               <span v-if="!collapsed">{{ getTitle(item) }}</span>
             </a-menu-item>
-            <SubMenu v-else :menu-info="item" :collapsed="collapsed" />
+            <SubMenu
+              v-else
+              :key="`sub-menu-${item.path}`"
+              :menu-info="item"
+              :collapsed="collapsed"
+            />
           </template>
         </template>
       </a-menu>
@@ -137,11 +142,11 @@ let openKeys = ref([]);
 let tempOpenKeys = ref([]);
 watch(collapsed, (val) => {
   if (val) {
-    tempOpenKeys = [...openKeys];
-    openKeys = [];
+    tempOpenKeys.value = [...openKeys];
+    openKeys.value = [];
   } else {
-    openKeys = [...tempOpenKeys];
-    tempOpenKeys = [];
+    openKeys.value = [...tempOpenKeys];
+    tempOpenKeys.value = [];
   }
 });
 
@@ -155,7 +160,7 @@ router.afterEach((to, from) => {
 });
 let menuRoute =
   router.options.routes.find((item) => item.name === "menu") || {};
-menus = menuRoute?.children || [];
+menus.value = menuRoute?.children || [];
 const setMenusMap = (routes, parentPath = "") => {
   routes.map((route) => {
     menusMap[route.path] = {
@@ -168,7 +173,7 @@ const setMenusMap = (routes, parentPath = "") => {
   });
 };
 setMenusMap(menus);
-openKeys = [menusMap[route.path]?.parentPath || ""];
+openKeys.value = [menusMap[route.path]?.parentPath || ""];
 
 // 语言切换
 const { t, locale } = useI18n();
