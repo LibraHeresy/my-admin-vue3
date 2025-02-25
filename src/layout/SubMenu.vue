@@ -14,7 +14,7 @@
     </template>
     <template v-for="item in props.menuInfo.children">
       <template v-if="!item.hideInMenu">
-        <a-menu-item v-if="!item.children" :key="`menu-${item.path}`">
+        <a-menu-item v-if="!item.children" :key="item.path">
           <template #icon v-if="item.meta?.icon">
             <component :is="item.meta.icon" />
           </template>

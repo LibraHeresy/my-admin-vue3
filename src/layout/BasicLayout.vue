@@ -29,7 +29,7 @@
       >
         <template v-for="item in menus">
           <template v-if="!item.hideInMenu">
-            <a-menu-item v-if="!item.children" :key="`menu-${item.path}`">
+            <a-menu-item v-if="!item.children" :key="item.path">
               <template #icon v-if="item.meta?.icon">
                 <component :is="item.meta.icon" />
               </template>
@@ -148,34 +148,21 @@ let menuRoute =
   router.options.routes.find((item) => item.name === "menu") || {};
 menus.value = menuRoute?.children || [];
 
-openKeys.value = [menusMap[route.path]?.parentPath || ""];
+openKeys.value = [menusMap.value[route.path]?.parentPath || ""];
 
 watch(collapsed, (val) => {
   if (val) {
-    tempOpenKeys.value = [...openKeys];
+    tempOpenKeys.value = [...openKeys.value];
     openKeys.value = [];
   } else {
-    openKeys.value = [...tempOpenKeys];
+    openKeys.value = [...tempOpenKeys.value];
     tempOpenKeys.value = [];
   }
 });
 
-watch(
-  localLanguage,
-  () => {
-    locale.value = localLanguage.value;
-    getBreadcrumb();
-  },
-  { immediate: true }
-);
-
-router.afterEach((to, from) => {
-  getBreadcrumb();
-});
-
 const setMenusMap = (routes, parentPath = "") => {
   routes.map((route) => {
-    menusMap[route.path] = {
+    menusMap.value[route.path] = {
       ...route,
       parentPath,
     };
@@ -184,7 +171,7 @@ const setMenusMap = (routes, parentPath = "") => {
     }
   });
 };
-setMenusMap(menus);
+setMenusMap(menus.value);
 
 const setLocalLanguage = (val) => {
   themeStore.setLocalLanguage(val);
@@ -200,7 +187,7 @@ const getTitle = (item) => {
 
 const getBreadcrumbTitle = (path) => {
   let breadcrumb = [];
-  const ob = menusMap[path];
+  const ob = menusMap.value[path];
   breadcrumb.push(getTitle(ob) || "");
   if (ob?.parentPath) {
     const arr = getBreadcrumbTitle(ob.parentPath);
@@ -215,6 +202,19 @@ const getBreadcrumb = () => {
 };
 
 getBreadcrumb();
+
+watch(
+  localLanguage,
+  () => {
+    locale.value = localLanguage.value;
+    getBreadcrumb();
+  },
+  { immediate: true }
+);
+
+router.afterEach((to, from) => {
+  getBreadcrumb();
+});
 
 // 菜单路由跳转
 const handleMenuClick = (e) => {
