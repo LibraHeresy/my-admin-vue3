@@ -16,38 +16,27 @@
   </a-card>
 </template>
 
-<script>
+<script setup>
 import StepForm1 from "./components/StepFormPage/StepForm1.vue";
 import StepForm2 from "./components/StepFormPage/StepForm2.vue";
 import StepForm3 from "./components/StepFormPage/StepForm3.vue";
-import { mapState, mapMutations } from "vuex";
 
-export default {
-  name: "StepFormPage",
-  components: {
-    StepForm1,
-    StepForm2,
-    StepForm3,
-  },
-  data() {
-    return {};
-  },
-  computed: {
-    ...mapState("step", ["step"]),
-  },
-  mounted() {
-    this.setTransferInfo(null);
-    this.setStep(0);
-  },
-  methods: {
-    ...mapMutations("step", ["setStep", "setTransferInfo"]),
-    prevStep() {
-      this.setStep(this.step - 1);
-    },
-    nextStep() {
-      this.setStep(this.step + 1);
-    },
-  },
+import { onMounted } from "vue";
+import { storeToRefs } from "pinia";
+import { useStore } from "@/store/step";
+const stepStore = useStore();
+const { step } = storeToRefs(stepStore);
+
+onMounted(() => {
+  stepStore.setTransferInfo(null);
+  stepStore.setStep(0);
+});
+
+const prevStep = () => {
+  stepStore.setStep(step.value - 1);
+};
+const nextStep = () => {
+  stepStore.setStep(step.value + 1);
 };
 </script>
 

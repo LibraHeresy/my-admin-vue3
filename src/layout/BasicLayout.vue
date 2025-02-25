@@ -173,20 +173,16 @@ setMenusMap(menus);
 openKeys = [menusMap[route.path]?.parentPath || ""];
 
 // 语言切换
+const { t, locale } = useI18n();
 const themeStore = useStore();
 const { theme, localLanguage } = storeToRefs(themeStore);
-watch(localLanguage, () => {
-  getBreadcrumb();
-});
+
 const setLocalLanguage = (val) => {
   themeStore.setLocalLanguage(val);
 };
-const handleChangeLanguage = (value) => {
-  setLocalLanguage(value);
+const handleChangeLanguage = (val) => {
+  setLocalLanguage(val);
 };
-
-// 获取标题
-const { t } = useI18n();
 const getTitle = (item) => {
   return item?.meta?.i18n ? t(item.meta.i18n) : item?.meta?.title || "";
 };
@@ -208,6 +204,15 @@ const getBreadcrumbTitle = (path) => {
   return breadcrumb;
 };
 getBreadcrumb();
+
+watch(
+  localLanguage,
+  () => {
+    getBreadcrumb();
+    console.log(locale.value);
+  },
+  { immediate: true }
+);
 
 // 菜单路由跳转
 const handleMenuClick = (e) => {

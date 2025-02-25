@@ -1,10 +1,10 @@
 <template>
   <a-form
-    ref="ruleForm"
+    ref="refRuleForm"
     :model="ruleForm"
     :rules="rules"
-    :label-col="labelCol"
-    :wrapper-col="wrapperCol"
+    :label-col="layout.labelCol"
+    :wrapper-col="layout.wrapperCol"
   >
     <a-form-item label="付款账户" name="paymentAccount">
       <span>{{ transferInfo.paymentAccount }}</span>
@@ -34,54 +34,48 @@
   </a-form>
 </template>
 
-<script>
-import { mapState, mapMutations } from "vuex";
-
+<script setup>
 class CreateRuleForm {
   constructor() {
     // 付款账户
     this.paySecret = "123456";
   }
 }
-export default {
-  data() {
-    return {
-      labelCol: { span: 6 },
-      wrapperCol: { span: 16 },
-      info: {},
-      ruleForm: new CreateRuleForm(),
-      rules: {
-        paySecret: [
-          {
-            required: true,
-            message: "请输入支付密码",
-            trigger: "change",
-          },
-        ],
-      },
-    };
-  },
-  computed: {
-    ...mapState("step", ["step", "transferInfo"]),
-  },
-  methods: {
-    ...mapMutations("step", ["setStep"]),
-    onSubmit() {
-      this.$refs.ruleForm.validate((valid) => {
-        if (valid) {
-          this.setStep(this.step + 1);
-        } else {
-          console.log("error submit!!");
-          return false;
-        }
-      });
+
+import { useTemplateRef, ref } from "vue";
+
+const layout = {
+  labelCol: { span: 6 },
+  wrapperCol: { span: 16 },
+};
+
+const ruleForm = ref(new CreateRuleForm());
+const rules = {
+  paySecret: [
+    {
+      required: true,
+      message: "请输入支付密码",
+      trigger: "change",
     },
-    resetForm() {
-      this.$refs.ruleForm.resetFields();
-    },
-    prevStep() {
-      this.setStep(this.step - 1);
-    },
-  },
+  ],
+};
+
+import { storeToRefs } from "pinia";
+import { useStore } from "@/store/step";
+const stepStore = useStore();
+const { step, transferInfo } = storeToRefs(stepStore);
+
+const refRuleForm = useTemplateRef("refRuleForm");
+const onSubmit = () => {
+  refRuleForm.value.validate().then(() => {
+    stepStore.setStep(step.value + 1);
+  });
+};
+
+const resetForm = () => {
+  refRuleForm.value.resetFields();
+};
+const prevStep = () => {
+  stepStore.setStep(step.value - 1);
 };
 </script>

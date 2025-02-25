@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import i18n from "@/language/i18n";
+import { useI18n } from "vue-i18n";
 
 export const useStore = defineStore("theme", {
   state: () => ({
@@ -12,7 +12,9 @@ export const useStore = defineStore("theme", {
     },
     setLocalLanguage(data) {
       this.localLanguage = data;
-      i18n.locale = data;
+      const { locale } = useI18n();
+      locale.value = data;
+      console.log(locale.value);
     },
   },
 });

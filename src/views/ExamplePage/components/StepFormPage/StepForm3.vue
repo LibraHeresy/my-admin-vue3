@@ -20,7 +20,7 @@
           style="margin-top: 24px"
           key="console"
           type="primary"
-          @click="() => $router.push({ path: '/' })"
+          @click="() => router.push({ path: '/' })"
         >
           确定
         </a-button>
@@ -29,19 +29,14 @@
   </div>
 </template>
 
-<script>
-import { mapState } from "vuex";
+<script setup>
+import { storeToRefs } from "pinia";
+import { useStore } from "@/store/step";
+const stepStore = useStore();
+const { transferInfo } = storeToRefs(stepStore);
 
-export default {
-  name: "StepForm3",
-  data() {
-    return {};
-  },
-  computed: {
-    ...mapState("step", ["transferInfo"]),
-  },
-  methods: {},
-};
+import { useRouter } from "vue-router";
+const router = useRouter();
 </script>
 
 <style lang="less" scoped></style>

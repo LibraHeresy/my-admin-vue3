@@ -1,10 +1,10 @@
 <template>
   <a-form
-    ref="ruleForm"
+    ref="refRuleForm"
     :model="ruleForm"
     :rules="rules"
-    :label-col="labelCol"
-    :wrapper-col="wrapperCol"
+    :label-col="layout.labelCol"
+    :wrapper-col="layout.wrapperCol"
   >
     <a-form-item label="付款账户" name="paymentAccount">
       <a-select
@@ -17,13 +17,7 @@
       </a-select>
     </a-form-item>
     <a-form-item label="收款账户" name="receiverAccount">
-      <a-input-group compact>
-        <a-select style="width: 20%" default-value="支付宝">
-          <a-select-option value="支付宝"> 支付宝 </a-select-option>
-          <a-select-option value="微信"> 微信 </a-select-option>
-        </a-select>
-        <a-input v-model:value="ruleForm.receiverAccount" style="width: 80%" />
-      </a-input-group>
+      <a-input v-model:value="ruleForm.receiverAccount" maxLength="50" />
     </a-form-item>
     <a-form-item label="收款人姓名" name="receiver">
       <a-input v-model:value="ruleForm.receiver" :maxLength="20" />
@@ -41,9 +35,7 @@
   </a-form>
 </template>
 
-<script>
-import { mapState, mapMutations } from "vuex";
-
+<script setup>
 class CreateRuleForm {
   constructor() {
     // 付款账户
@@ -57,68 +49,63 @@ class CreateRuleForm {
   }
 }
 
-export default {
-  data() {
-    return {
-      labelCol: { span: 6 },
-      wrapperCol: { span: 14 },
-      ruleForm: new CreateRuleForm(),
-      rules: {
-        paymentAccount: [
-          {
-            required: true,
-            message: "请选择付款账户",
-            trigger: "change",
-          },
-        ],
-        receiverAccount: [
-          {
-            required: true,
-            message: "请选择收款账户",
-            trigger: "change",
-          },
-        ],
-        receiver: [
-          {
-            required: true,
-            message: "请输入收款人姓名",
-            trigger: "change",
-          },
-        ],
-        transferAmount: [
-          {
-            required: true,
-            message: "请输入转账金额",
-            trigger: "change",
-          },
-        ],
-      },
-    };
-  },
-  computed: {
-    ...mapState("step", ["step", "transferInfo"]),
-  },
-  mounted() {
-    if (this.transferInfo) {
-      this.ruleForm = this.transferInfo;
-    }
-  },
-  methods: {
-    ...mapMutations("step", ["setStep", "setTransferInfo"]),
-    onSubmit() {
-      this.$refs.ruleForm.validate((valid) => {
-        if (valid) {
-          this.setTransferInfo(this.ruleForm);
-          this.setStep(this.step + 1);
-        } else {
-          console.log("error submit!!");
-          return false;
-        }
-      });
+import { ref, onMounted, useTemplateRef } from "vue";
+
+const layout = {
+  labelCol: { span: 6 },
+  wrapperCol: { span: 14 },
+};
+const ruleForm = ref(new CreateRuleForm());
+const rules = {
+  paymentAccount: [
+    {
+      required: true,
+      message: "请选择付款账户",
+      trigger: "change",
     },
-    resetForm() {
-      this.$refs.ruleForm.resetFields();
+  ],
+  receiverAccount: [
+    {
+      required: true,
+      message: "请选择收款账户",
+      trigger: "change",
     },
-  },
+  ],
+  receiver: [
+    {
+      required: true,
+      message: "请输入收款人姓名",
+      trigger: "change",
+    },
+  ],
+  transferAmount: [
+    {
+      required: true,
+      message: "请输入转账金额",
+      trigger: "change",
+    },
+  ],
+};
+
+import { storeToRefs } from "pinia";
+import { useStore } from "@/store/step";
+const stepStore = useStore();
+const { step, transferInfo } = storeToRefs(stepStore);
+
+onMounted(() => {
+  if (transferInfo.value) {
+    ruleForm.value = transferInfo.value;
+  }
+});
+
+const refRuleForm = useTemplateRef("refRuleForm");
+const onSubmit = () => {
+  refRuleForm.value.validate().then(() => {
+    stepStore.setTransferInfo({ ...ruleForm.value });
+    stepStore.setStep(step.value + 1);
+  });
+};
+const resetForm = () => {
+  refRuleForm.value.resetFields();
 };
 </script>
