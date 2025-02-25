@@ -4,7 +4,7 @@ import path from 'path';
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/', // 设置为相对路径或你的部署路径
+  base: './', // 设置为相对路径或你的部署路径
   plugins: [vue()],
   css: {
     preprocessorOptions: {
