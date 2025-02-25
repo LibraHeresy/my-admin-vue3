@@ -41,11 +41,11 @@ import { CanvasRenderer } from "echarts/renderers";
 echarts.use([GridComponent, LineChart, CanvasRenderer, UniversalTransition]);
 
 import moment from "moment";
-
 import { reactive, onMounted, onBeforeUnmount } from "vue";
-
 import { CaretUpOutlined } from "@ant-design/icons-vue";
 
+let myCharts = reactive([]);
+const today = moment();
 const columns = [
   {
     title: "排行",
@@ -72,7 +72,6 @@ const columns = [
     align: "right",
   },
 ];
-
 let data = [
   {
     key: "1",
@@ -116,8 +115,6 @@ data = data.concat(
     rank: +item.rank + 5,
   }))
 );
-
-const today = moment();
 const chartOption = {
   tooltip: {
     trigger: "axis",
@@ -174,7 +171,13 @@ onMounted(() => {
   });
 });
 
-const myCharts = reactive([]);
+onBeforeUnmount(() => {
+  // 销毁 echarts
+  myCharts.forEach((item) => {
+    item.dispose();
+  });
+});
+
 const renderChart = () => {
   if (myCharts.length < 1 || !myCharts.every((item) => item)) {
     const chartDomOne = document.getElementById("online-top-search-chart-one");
@@ -182,13 +185,6 @@ const renderChart = () => {
   }
   myCharts[0].setOption(chartOption);
 };
-
-onBeforeUnmount(() => {
-  // 销毁 echarts
-  myCharts.forEach((item) => {
-    item.dispose();
-  });
-});
 </script>
 
 <style lang="less" scoped>

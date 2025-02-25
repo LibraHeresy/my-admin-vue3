@@ -12,11 +12,12 @@ import * as echarts from "echarts/core";
 import { TooltipComponent, GridComponent } from "echarts/components";
 import { BarChart } from "echarts/charts";
 import { CanvasRenderer } from "echarts/renderers";
-
 echarts.use([GridComponent, BarChart, CanvasRenderer, TooltipComponent]);
 
 import { ref, onBeforeUnmount, useTemplateRef } from "vue";
 
+let myChart = ref(null);
+let refCharts = useTemplateRef("refCharts");
 const chartOption = {
   tooltip: {
     trigger: "axis",
@@ -58,8 +59,13 @@ const chartOption = {
   ],
 };
 
-let myChart = ref(null);
-let refCharts = useTemplateRef("refCharts");
+onBeforeUnmount(() => {
+  // 销毁 echarts
+  if (myChart.value != null) {
+    myChart.value.dispose();
+  }
+});
+
 const renderChart = () => {
   if (!myChart.value) {
     const chartDom = refCharts.value;
@@ -70,13 +76,6 @@ const renderChart = () => {
 
 defineExpose({
   renderChart,
-});
-
-onBeforeUnmount(() => {
-  // 销毁 echarts
-  if (myChart.value != null) {
-    myChart.value.dispose();
-  }
 });
 </script>
 

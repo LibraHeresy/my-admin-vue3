@@ -23,8 +23,7 @@
 <script setup>
 import PersonInfo from "./components/PersonInfo.vue";
 import CustomSetting from "./components/CustomSetting.vue";
-import { SettingOutlined, UserOutlined } from "@ant-design/icons-vue"
-
+import { SettingOutlined, UserOutlined } from "@ant-design/icons-vue";
 import { ref, computed, h } from "vue";
 
 let mode = ref("inline");

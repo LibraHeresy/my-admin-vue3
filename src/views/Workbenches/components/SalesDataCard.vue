@@ -29,6 +29,10 @@ import VisitsData from "./VisitsData.vue";
 import moment from "moment";
 import { ref, reactive, useTemplateRef } from "vue";
 
+let dateRange = reactive([]);
+const refSalesData = useTemplateRef("refSalesData");
+let tab = ref("sales");
+let dateFormat = "YYYY-MM-DD";
 const tabList = [
   {
     key: "sales",
@@ -39,9 +43,6 @@ const tabList = [
     tab: "访问",
   },
 ];
-
-let tab = ref("sales");
-
 const dateList = [
   {
     key: "前6月",
@@ -61,9 +62,6 @@ const dateList = [
   },
 ];
 
-let dateRange = reactive([]);
-let dateFormat = "YYYY-MM-DD";
-const refSalesData = useTemplateRef("refSalesData");
 const onTabChange = (key) => {
   tab.value = key;
 

@@ -93,13 +93,6 @@
 </template>
 
 <script setup>
-import {
-  OrderStatusDict,
-  OrderTypeDict,
-  OrderPayMentDict,
-} from "../../configs/dict";
-import { UpOutlined, DownOutlined } from "@ant-design/icons-vue";
-
 class CreateRuleForm {
   constructor() {
     // 订单号
@@ -115,25 +108,32 @@ class CreateRuleForm {
   }
 }
 
-import { ref, reactive, defineEmits } from "vue";
+import {
+  OrderStatusDict,
+  OrderTypeDict,
+  OrderPayMentDict,
+} from "../../configs/dict";
+import { UpOutlined, DownOutlined } from "@ant-design/icons-vue";
+import { ref, defineEmits } from "vue";
 
+const emits = defineEmits(["reset", "search"]);
+
+let ruleForm = ref(new CreateRuleForm());
+let advanced = ref(false);
 const layout = {
   labelCol: { span: 4 },
   wrapperCol: { span: 17 },
 };
 
-let ruleForm = ref(new CreateRuleForm());
-let advanced = ref(false);
-
 const toggleAdvanced = () => {
   advanced.value = !advanced.value;
 };
 
-const emits = defineEmits(["reset", "search"]);
 const handleReset = () => {
   ruleForm.value = new CreateRuleForm();
   emits("reset");
 };
+
 const handleSearch = () => {
   emits("search", { ...ruleForm.value });
 };

@@ -20,10 +20,10 @@
 import StepForm1 from "./components/StepFormPage/StepForm1.vue";
 import StepForm2 from "./components/StepFormPage/StepForm2.vue";
 import StepForm3 from "./components/StepFormPage/StepForm3.vue";
-
 import { onMounted } from "vue";
 import { storeToRefs } from "pinia";
 import { useStore } from "@/store/step";
+
 const stepStore = useStore();
 const { step } = storeToRefs(stepStore);
 
@@ -31,13 +31,6 @@ onMounted(() => {
   stepStore.setTransferInfo(null);
   stepStore.setStep(0);
 });
-
-const prevStep = () => {
-  stepStore.setStep(step.value - 1);
-};
-const nextStep = () => {
-  stepStore.setStep(step.value + 1);
-};
 </script>
 
 <style lang="less" scoped>

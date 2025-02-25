@@ -10,24 +10,21 @@
 <script setup>
 import enUS from "ant-design-vue/es/locale/en_US";
 import zhCN from "ant-design-vue/es/locale/zh_CN";
-
+import dayjs from "dayjs";
+import "dayjs/locale/zh-cn";
 import { useI18n } from "vue-i18n";
-const { locale } = useI18n();
+import { storeToRefs } from "pinia";
+import { useStore } from "@/store/theme";
 
+const { locale } = useI18n();
 const dict = {
   enUS,
   zhCN,
 };
-
-import dayjs from "dayjs";
-import "dayjs/locale/zh-cn";
-
-dayjs.locale(locale.value);
-
-import { storeToRefs } from "pinia";
-import { useStore } from "@/store/theme";
 const themeStore = useStore();
 const { color } = storeToRefs(themeStore);
+
+dayjs.locale(locale.value);
 </script>
 
 <style scoped>

@@ -32,10 +32,12 @@ const props = defineProps({
 });
 
 const emits = defineEmits(["change"]);
+
 const handleClick = () => {
   const dom = document.getElementById("color-picker-input");
   dom.click();
 };
+
 const handleInput = throttle((e) => {
   emits("change", e.target.value);
 }, 100);

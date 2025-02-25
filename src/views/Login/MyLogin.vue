@@ -57,18 +57,22 @@
 </template>
 
 <script setup>
-import { ref, reactive } from "vue";
-import { UserOutlined, LockOutlined } from "@ant-design/icons-vue";
-import { message } from 'ant-design-vue';
-const [messageApi, contextHolder] = message.useMessage();
-import { useRouter } from "vue-router";
-
 class CreateRuleForm {
   constructor() {
     this.account = "";
     this.password = "";
   }
 }
+
+import { useTemplateRef, reactive } from "vue";
+import { UserOutlined, LockOutlined } from "@ant-design/icons-vue";
+import { message } from "ant-design-vue";
+import { useRouter } from "vue-router";
+
+const [messageApi, contextHolder] = message.useMessage();
+const router = useRouter();
+let ruleForm = reactive(new CreateRuleForm());
+const refRuleForm = useTemplateRef("refRuleForm");
 
 const layout = {
   labelCol: { span: 0 },
@@ -94,24 +98,19 @@ const rules = {
   ],
 };
 
-const router = useRouter();
-let ruleForm = reactive(new CreateRuleForm());
-const refRuleForm = ref();
 const submitForm = () => {
-  refRuleForm.value
-    .validate()
-    .then(() => {
-      if (ruleForm.account === "admin" && ruleForm.password === "123456") {
-        messageApi.success("登录成功");
+  refRuleForm.value.validate().then(() => {
+    if (ruleForm.account === "admin" && ruleForm.password === "123456") {
+      messageApi.success("登录成功");
 
-        localStorage.setItem("token", "token");
-        router.push({
-          path: "/",
-        });
-      } else {
-        messageApi.error("账号或密码错误");
-      }
-    })
+      localStorage.setItem("token", "token");
+      router.push({
+        path: "/",
+      });
+    } else {
+      messageApi.error("账号或密码错误");
+    }
+  });
 };
 </script>
 

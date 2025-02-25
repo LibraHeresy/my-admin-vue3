@@ -11,9 +11,6 @@
 </template>
 
 <script setup>
-import MyCard from "./MyCard.vue";
-import moment from "moment";
-
 import * as echarts from "echarts/core";
 import { GridComponent } from "echarts/components";
 import { LineChart } from "echarts/charts";
@@ -22,6 +19,8 @@ import { CanvasRenderer } from "echarts/renderers";
 echarts.use([GridComponent, LineChart, CanvasRenderer, UniversalTransition]);
 
 import { ref, onBeforeUnmount } from "vue";
+import MyCard from "./MyCard.vue";
+import moment from "moment";
 
 const props = defineProps({
   info: {
@@ -30,6 +29,7 @@ const props = defineProps({
   },
 });
 
+let myChart = ref(null);
 const today = moment();
 const chartOption = {
   tooltip: {
@@ -70,7 +70,12 @@ const chartOption = {
   ],
 };
 
-let myChart = ref(null);
+onBeforeUnmount(() => {
+  // 销毁 echarts
+  if (myChart.value != null) {
+    myChart.value.dispose();
+  }
+});
 
 const renderChart = () => {
   if (!myChart.value) {
@@ -81,13 +86,6 @@ const renderChart = () => {
     props.info?.past7daysOrders.map((item) => item.orders) || [];
   myChart.value.setOption(chartOption);
 };
-
-onBeforeUnmount(() => {
-  // 销毁 echarts
-  if (myChart.value != null) {
-    myChart.value.dispose();
-  }
-});
 
 defineExpose({
   renderChart,

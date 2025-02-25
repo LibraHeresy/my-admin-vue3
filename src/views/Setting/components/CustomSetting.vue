@@ -29,6 +29,7 @@
 import ColorPicker from "@/components/ColorPicker.vue";
 import { storeToRefs } from "pinia";
 import { useStore } from "@/store/theme";
+
 const themeStore = useStore();
 const { theme, color } = storeToRefs(themeStore);
 

@@ -18,15 +18,8 @@
 </template>
 
 <script setup>
+import { defineEmits, ref, shallowRef, onBeforeUnmount } from "vue";
 import { Editor, Toolbar } from "@wangeditor/editor-for-vue";
-import { ref, shallowRef, onBeforeUnmount } from "vue";
-import { defineEmits } from "vue";
-
-const emits = defineEmits(["input"]);
-
-const handleInput = (value) => {
-  emits("input", value.getHtml());
-};
 
 const props = defineProps({
   value: {
@@ -34,6 +27,8 @@ const props = defineProps({
     default: "",
   },
 });
+
+const emits = defineEmits(["input"]);
 
 const editorRef = shallowRef();
 
@@ -45,6 +40,9 @@ const editorConfig = {
 
 const mode = ref("default");
 
+const handleInput = (value) => {
+  emits("input", value.getHtml());
+};
 const onCreated = (editor) => {
   editorRef.value = Object.seal(editor);
 };

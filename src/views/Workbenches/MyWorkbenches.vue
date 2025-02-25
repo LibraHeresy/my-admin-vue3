@@ -136,6 +136,8 @@ import TotalProgress from "./components/TotalProgress.vue";
 
 let info = reactive(new CreateInfo());
 let isLoading = ref(true);
+const refTotalVisitors = useTemplateRef("refTotalVisitors");
+const refTotalOrders = useTemplateRef("refTotalOrders");
 
 onMounted(() => {
   getWorkbenchesData({}).then((res) => {
@@ -153,8 +155,6 @@ onMounted(() => {
   }, 1500);
 });
 
-const refTotalVisitors = useTemplateRef("refTotalVisitors");
-const refTotalOrders = useTemplateRef("refTotalOrders");
 const renderChart = () => {
   if (refTotalVisitors.value && refTotalOrders.value) {
     refTotalVisitors.value.renderChart();

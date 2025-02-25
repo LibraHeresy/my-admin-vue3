@@ -43,13 +43,17 @@ class CreateRuleForm {
 }
 
 import { useTemplateRef, ref } from "vue";
+import { storeToRefs } from "pinia";
+import { useStore } from "@/store/step";
 
+const refRuleForm = useTemplateRef("refRuleForm");
+const stepStore = useStore();
+const { step, transferInfo } = storeToRefs(stepStore);
+const ruleForm = ref(new CreateRuleForm());
 const layout = {
   labelCol: { span: 6 },
   wrapperCol: { span: 16 },
 };
-
-const ruleForm = ref(new CreateRuleForm());
 const rules = {
   paySecret: [
     {
@@ -60,12 +64,6 @@ const rules = {
   ],
 };
 
-import { storeToRefs } from "pinia";
-import { useStore } from "@/store/step";
-const stepStore = useStore();
-const { step, transferInfo } = storeToRefs(stepStore);
-
-const refRuleForm = useTemplateRef("refRuleForm");
 const onSubmit = () => {
   refRuleForm.value.validate().then(() => {
     stepStore.setStep(step.value + 1);
@@ -75,6 +73,7 @@ const onSubmit = () => {
 const resetForm = () => {
   refRuleForm.value.resetFields();
 };
+
 const prevStep = () => {
   stepStore.setStep(step.value - 1);
 };

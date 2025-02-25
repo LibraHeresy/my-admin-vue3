@@ -50,12 +50,17 @@ class CreateRuleForm {
 }
 
 import { ref, onMounted, useTemplateRef } from "vue";
+import { storeToRefs } from "pinia";
+import { useStore } from "@/store/step";
 
+const refRuleForm = useTemplateRef("refRuleForm");
+const stepStore = useStore();
+const { step, transferInfo } = storeToRefs(stepStore);
+const ruleForm = ref(new CreateRuleForm());
 const layout = {
   labelCol: { span: 6 },
   wrapperCol: { span: 14 },
 };
-const ruleForm = ref(new CreateRuleForm());
 const rules = {
   paymentAccount: [
     {
@@ -87,10 +92,6 @@ const rules = {
   ],
 };
 
-import { storeToRefs } from "pinia";
-import { useStore } from "@/store/step";
-const stepStore = useStore();
-const { step, transferInfo } = storeToRefs(stepStore);
 
 onMounted(() => {
   if (transferInfo.value) {
@@ -98,13 +99,13 @@ onMounted(() => {
   }
 });
 
-const refRuleForm = useTemplateRef("refRuleForm");
 const onSubmit = () => {
   refRuleForm.value.validate().then(() => {
     stepStore.setTransferInfo({ ...ruleForm.value });
     stepStore.setStep(step.value + 1);
   });
 };
+
 const resetForm = () => {
   refRuleForm.value.resetFields();
 };

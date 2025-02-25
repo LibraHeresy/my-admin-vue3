@@ -70,11 +70,6 @@
 </template>
 
 <script setup>
-import { OrderTypeDict, OrderPayMentDict } from "../../configs/dict";
-import MyEditor from "@/components/MyEditor.vue";
-import moment from "moment";
-import { ref, reactive, useTemplateRef, defineExpose, defineEmits } from "vue";
-
 class CreateRuleForm {
   constructor() {
     // 订单金额
@@ -90,13 +85,21 @@ class CreateRuleForm {
   }
 }
 
+import { OrderTypeDict, OrderPayMentDict } from "../../configs/dict";
+import MyEditor from "@/components/MyEditor.vue";
+import moment from "moment";
+import { ref, useTemplateRef, defineExpose, defineEmits } from "vue";
+
+const emits = defineEmits(["submit"]);
+
+const refRuleForm = useTemplateRef("refRuleForm");
 const visible = ref(false);
 const isLoading = ref(false);
+const ruleForm = ref(new CreateRuleForm());
 const layout = {
   labelCol: { span: 4 },
   wrapperCol: { span: 24 },
 };
-const ruleForm = ref(new CreateRuleForm());
 const rules = {
   orderAmount: [
     {
@@ -139,12 +142,6 @@ const showModal = () => {
   visible.value = true;
 };
 
-defineExpose({
-  showModal,
-});
-
-const emits = defineEmits(["submit"]);
-const refRuleForm = useTemplateRef("refRuleForm");
 const handleSubmit = () => {
   refRuleForm.value.validate().then(() => {
     isLoading.value = true;
@@ -152,7 +149,9 @@ const handleSubmit = () => {
       isLoading.value = false;
       visible.value = false;
       ruleForm.value.orderStatus = "待支付";
-      ruleForm.value.orderAmount = Number(ruleForm.value.orderAmount).toFixed(2);
+      ruleForm.value.orderAmount = Number(ruleForm.value.orderAmount).toFixed(
+        2
+      );
       ruleForm.value.orderDate = moment().format("YYYY-MM-DD");
       ruleForm.value.orderNo = `${moment().format("YYYYMMDD")}-${Math.floor(
         Math.random() * 7000 + 1000
@@ -167,4 +166,8 @@ const handleCancel = () => {
   visible.value = false;
   ruleForm.value = new CreateRuleForm();
 };
+
+defineExpose({
+  showModal,
+});
 </script>

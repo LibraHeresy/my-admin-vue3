@@ -17,9 +17,6 @@ import { TooltipComponent, LegendComponent } from "echarts/components";
 import { PieChart } from "echarts/charts";
 import { LabelLayout } from "echarts/features";
 import { CanvasRenderer } from "echarts/renderers";
-
-import { ref, onMounted, onBeforeUnmount } from "vue";
-
 echarts.use([
   TooltipComponent,
   LegendComponent,
@@ -28,6 +25,9 @@ echarts.use([
   LabelLayout,
 ]);
 
+import { ref, onMounted, onBeforeUnmount } from "vue";
+
+let myChart = ref(null);
 const chartOption = {
   tooltip: {
     trigger: "item",
@@ -78,7 +78,12 @@ onMounted(() => {
   });
 });
 
-const myChart = ref(null);
+onBeforeUnmount(() => {
+  // 销毁 echarts
+  if (myChart.value != null) {
+    myChart.value.dispose();
+  }
+});
 
 const renderChart = () => {
   if (!myChart.value) {
@@ -87,13 +92,6 @@ const renderChart = () => {
   }
   myChart.value.setOption(chartOption);
 };
-
-onBeforeUnmount(() => {
-  // 销毁 echarts
-  if (myChart.value != null) {
-    myChart.value.dispose();
-  }
-});
 </script>
 
 <style lang="less" scoped>

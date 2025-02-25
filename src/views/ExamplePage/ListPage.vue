@@ -8,13 +8,14 @@
 <script setup>
 import ListPageSearch from "./components/ListPage/ListPageSearch.vue";
 import ListPageTable from "./components/ListPage/ListPageTable.vue";
-
 import { useTemplateRef } from "vue";
 
 const refListPageTable = useTemplateRef("refListPageTable");
+
 const handleSearch = (value) => {
   refListPageTable.value.handleSearch(value);
 };
+
 const handleReset = () => {
   refListPageTable.value.handleReset();
 };

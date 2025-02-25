@@ -78,12 +78,12 @@ class CreateRuleForm {
   }
 }
 
-import { ref, reactive, useTemplateRef, toRaw } from "vue";
+import { ref, useTemplateRef } from "vue";
 
-function isValidEmail(email) {
+const isValidEmail = (email) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
-}
+};
 
 let checkEmail = (rule, value, callback) => {
   if (!isValidEmail(value)) {
@@ -93,14 +93,14 @@ let checkEmail = (rule, value, callback) => {
   }
 };
 
+let isEdit = ref(false);
+let info = ref(new CreateInfo());
+let ruleForm = ref(new CreateRuleForm());
+const refRuleForm = useTemplateRef("refRuleForm");
 const layout = {
   labelCol: { span: 4 },
   wrapperCol: { span: 24 },
 };
-
-let info = reactive(new CreateInfo());
-let ruleForm = reactive(new CreateRuleForm());
-
 const rules = {
   nickname: [
     {
@@ -123,24 +123,23 @@ const rules = {
     },
   ],
 };
-let isEdit = ref(false);
 
 const toEdit = () => {
   isEdit.value = true;
-  ruleForm = { ...toRaw(info) };
+  ruleForm.value = { ...info.value };
 };
 
-const refRuleForm = useTemplateRef("refRuleForm");
 const onSubmit = () => {
   refRuleForm.value.validate().then(() => {
     isEdit.value = false;
-    info = { ...toRaw(ruleForm) };
+    info.value = { ...ruleForm.value };
   });
 };
+
 const onCancel = () => {
   refRuleForm.value.resetFields();
   isEdit.value = false;
-  ruleForm = { ...toRaw(info) };
+  ruleForm.value = { ...info.value };
 };
 </script>
 

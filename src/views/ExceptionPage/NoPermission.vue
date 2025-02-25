@@ -16,6 +16,7 @@
 </template>
 <script setup>
 import { useRouter } from "vue-router";
+
 const router = useRouter();
 </script>
 <style lang="less" scoped></style>

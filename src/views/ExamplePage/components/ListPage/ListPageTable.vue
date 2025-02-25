@@ -71,7 +71,12 @@ import { ListPageColumns } from "../../configs/config";
 import { ListPageData } from "../../configs/data";
 import AddOrderModal from "./AddOrderModal.vue";
 import { PlusOutlined, CloseOutlined } from "@ant-design/icons-vue";
+import { useStore } from "@/store/order";
+import { useRouter } from "vue-router";
 
+const router = useRouter();
+const { setOrder } = useStore();
+const refAddOrderModal = useTemplateRef("refAddOrderModal");
 let tableData = ref([...ListPageData]);
 const columns = ref([...ListPageColumns]);
 let selectedRowKeys = ref([]);
@@ -83,26 +88,25 @@ const message = computed(() => {
   return `${selectedRowKeys.value.length || 0} 条数据已选择`;
 });
 
-import { useStore } from "@/store/order";
-const { setOrder } = useStore();
-
 const onSelectChange = (tableSelectedRowKeys) => {
   selectedRowKeys.value = tableSelectedRowKeys;
 };
+
 const handleResetSelected = () => {
   selectedRowKeys.value = [];
 };
 
-const refAddOrderModal = useTemplateRef("refAddOrderModal");
 const handleAdd = () => {
   refAddOrderModal.value.showModal();
 };
+
 const handleDelete = () => {
   tableData.value = tableData.value.filter(
     (item) => !selectedRowKeys.value.includes(item.orderNo)
   );
   handleResetSelected();
 };
+
 const handleSearch = (value) => {
   isLoading.value = true;
   setTimeout(() => {
@@ -122,17 +126,11 @@ const handleSearch = (value) => {
     isLoading.value = false;
   }, 1000);
 };
+
 const handleReset = () => {
   tableData.value = [...ListPageData];
 };
 
-defineExpose({
-  handleSearch,
-  handleReset,
-});
-
-import { useRouter } from "vue-router";
-const router = useRouter();
 const toDetailPage = (order) => {
   setOrder(order);
   router.push({
@@ -142,4 +140,9 @@ const toDetailPage = (order) => {
     },
   });
 };
+
+defineExpose({
+  handleSearch,
+  handleReset,
+});
 </script>

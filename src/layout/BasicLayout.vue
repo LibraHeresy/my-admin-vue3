@@ -133,13 +133,23 @@ import {
   UserOutlined,
 } from "@ant-design/icons-vue";
 
-// 监控 route 变化，重新获取面包屑
 const route = useRoute();
-
-// 控制菜单折叠
+const router = useRouter();
+const { t, locale } = useI18n();
+const themeStore = useStore();
+const { theme, localLanguage } = storeToRefs(themeStore);
 let collapsed = ref(false);
 let openKeys = ref([]);
 let tempOpenKeys = ref([]);
+let menus = ref([]);
+let menusMap = ref({});
+let breadcrumbs = ref([]);
+let menuRoute =
+  router.options.routes.find((item) => item.name === "menu") || {};
+menus.value = menuRoute?.children || [];
+
+openKeys.value = [menusMap[route.path]?.parentPath || ""];
+
 watch(collapsed, (val) => {
   if (val) {
     tempOpenKeys.value = [...openKeys];
@@ -150,17 +160,19 @@ watch(collapsed, (val) => {
   }
 });
 
-// 获取菜单数据
-let menus = ref([]);
-let menusMap = ref({});
-const router = useRouter();
+watch(
+  localLanguage,
+  () => {
+    locale.value = localLanguage.value;
+    getBreadcrumb();
+  },
+  { immediate: true }
+);
 
 router.afterEach((to, from) => {
   getBreadcrumb();
 });
-let menuRoute =
-  router.options.routes.find((item) => item.name === "menu") || {};
-menus.value = menuRoute?.children || [];
+
 const setMenusMap = (routes, parentPath = "") => {
   routes.map((route) => {
     menusMap[route.path] = {
@@ -173,25 +185,19 @@ const setMenusMap = (routes, parentPath = "") => {
   });
 };
 setMenusMap(menus);
-openKeys.value = [menusMap[route.path]?.parentPath || ""];
-
-// 语言切换
-const { t, locale } = useI18n();
-const themeStore = useStore();
-const { theme, localLanguage } = storeToRefs(themeStore);
 
 const setLocalLanguage = (val) => {
   themeStore.setLocalLanguage(val);
 };
+
 const handleChangeLanguage = (val) => {
   setLocalLanguage(val);
 };
+
 const getTitle = (item) => {
   return item?.meta?.i18n ? t(item.meta.i18n) : item?.meta?.title || "";
 };
 
-// 渲染面包屑
-let breadcrumbs = ref([]);
 const getBreadcrumbTitle = (path) => {
   let breadcrumb = [];
   const ob = menusMap[path];
@@ -202,20 +208,13 @@ const getBreadcrumbTitle = (path) => {
   }
   return breadcrumb;
 };
+
 const getBreadcrumb = () => {
   const arr = getBreadcrumbTitle(route.path);
   breadcrumbs.value = [...arr.reverse()];
 };
-getBreadcrumb();
 
-watch(
-  localLanguage,
-  () => {
-    locale.value = localLanguage.value;
-    getBreadcrumb();
-  },
-  { immediate: true }
-);
+getBreadcrumb();
 
 // 菜单路由跳转
 const handleMenuClick = (e) => {

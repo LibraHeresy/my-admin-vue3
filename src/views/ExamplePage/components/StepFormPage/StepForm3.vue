@@ -32,10 +32,10 @@
 <script setup>
 import { storeToRefs } from "pinia";
 import { useStore } from "@/store/step";
+import { useRouter } from "vue-router";
+
 const stepStore = useStore();
 const { transferInfo } = storeToRefs(stepStore);
-
-import { useRouter } from "vue-router";
 const router = useRouter();
 </script>
 

@@ -12,11 +12,11 @@ import * as echarts from "echarts/core";
 import { TooltipComponent, GridComponent } from "echarts/components";
 import { BarChart } from "echarts/charts";
 import { CanvasRenderer } from "echarts/renderers";
-
 echarts.use([GridComponent, BarChart, CanvasRenderer, TooltipComponent]);
 
 import { ref, onBeforeUnmount } from "vue";
 
+let myChart = ref(null);
 const chartOption = {
   tooltip: {
     trigger: "axis",
@@ -58,7 +58,12 @@ const chartOption = {
   ],
 };
 
-let myChart = ref(null);
+onBeforeUnmount(() => {
+  // 销毁 echarts
+  if (myChart.value != null) {
+    myChart.value.dispose();
+  }
+});
 
 const renderChart = () => {
   if (!myChart.value) {
@@ -68,16 +73,9 @@ const renderChart = () => {
   myChart.value.setOption(chartOption);
 };
 
-onBeforeUnmount(() => {
-  // 销毁 echarts
-  if (myChart.value != null) {
-    myChart.value.dispose();
-  }
-});
-
 defineExpose({
-  renderChart
-})
+  renderChart,
+});
 </script>
 
 <style lang="less" scoped>
