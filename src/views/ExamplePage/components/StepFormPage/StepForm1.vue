@@ -9,10 +9,10 @@
     <a-form-item label="付款账户" name="paymentAccount">
       <a-select
         v-model:value="ruleForm.paymentAccount"
-        placeholder="my-admin-vue2@alipay.com"
+        placeholder="my-admin-vue3@alipay.com"
       >
-        <a-select-option value="my-admin-vue2@alipay.com">
-          my-admin-vue2@alipay.com
+        <a-select-option value="my-admin-vue3@alipay.com">
+          my-admin-vue3@alipay.com
         </a-select-option>
       </a-select>
     </a-form-item>

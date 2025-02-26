@@ -1,7 +1,7 @@
 <template>
   <div class="my-login">
     <div class="login-form">
-      <div class="title">My-Admin-Vue2</div>
+      <div class="title">My-Admin-Vue3</div>
       <a-tabs default-active-key="1" size="large" centered>
         <a-tab-pane key="1" tab="账号登录">
           <a-form
