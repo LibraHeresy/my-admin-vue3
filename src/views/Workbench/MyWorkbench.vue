@@ -1,5 +1,5 @@
 <template>
-  <div class="my-workbenches" v-if="isLoading">
+  <div class="my-workbench" v-if="isLoading">
     <div class="desc-cards">
       <div class="desc-card skeleton">
         <a-skeleton :active="true" :loading="isLoading"> </a-skeleton>
@@ -33,7 +33,7 @@
       </div>
     </div>
   </div>
-  <div class="my-workbenches" v-else>
+  <div class="my-workbench" v-else>
     <div class="desc-cards">
       <TotalSales class="desc-card" :info="info" />
       <TotalVisitors ref="refTotalVisitors" class="desc-card" :info="info" />
@@ -128,7 +128,7 @@ import { ref, reactive, useTemplateRef, onMounted } from "vue";
 import SalesDataCard from "./components/SalesDataCard.vue";
 import OnlineTopSearch from "./components/OnlineTopSearch.vue";
 import ProportionOfSales from "./components/ProportionOfSales.vue";
-import { getWorkbenchesData } from "@/api/common";
+import { getWorkbenchData } from "@/api/common";
 import TotalSales from "./components/TotalSales.vue";
 import TotalVisitors from "./components/TotalVisitors.vue";
 import TotalOrders from "./components/TotalOrders.vue";
@@ -140,7 +140,7 @@ const refTotalVisitors = useTemplateRef("refTotalVisitors");
 const refTotalOrders = useTemplateRef("refTotalOrders");
 
 onMounted(() => {
-  getWorkbenchesData({}).then((res) => {
+  getWorkbenchData({}).then((res) => {
     if (res.code === 200) {
       info = res.data;
 
@@ -168,7 +168,7 @@ const renderChart = () => {
 </script>
 
 <style lang="less" scoped>
-.my-workbenches {
+.my-workbench {
   .desc-cards {
     display: flex;
     align-items: center;

@@ -1,18 +1,18 @@
-import MyWorkbenches from "@/views/Workbenches/MyWorkbenches.vue";
+import MyWorkbench from "@/views/Workbench/MyWorkbench.vue";
 import { h } from "vue";
 import { DesktopOutlined } from "@ant-design/icons-vue";
 
 const routes = [
   {
-    path: "/workbenches",
-    name: "MyWorkbenches",
+    path: "/workbench",
+    name: "MyWorkbench",
     meta: {
       title: "工作台",
       icon: () => h(DesktopOutlined),
-      i18n: "workbenches",
+      i18n: "workbench",
       role: ["admin"],
     },
-    component: MyWorkbenches,
+    component: MyWorkbench,
   },
 ];
 

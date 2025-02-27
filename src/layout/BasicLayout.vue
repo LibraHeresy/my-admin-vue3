@@ -23,7 +23,7 @@
       <a-menu
         :theme="theme"
         mode="inline"
-        :selectedKeys="[$route.path]"
+        :selectedKeys="[route.path]"
         v-model:openKeys="openKeys"
         @select="handleMenuClick"
       >
