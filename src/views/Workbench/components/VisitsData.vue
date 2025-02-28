@@ -1,8 +1,8 @@
 <template>
-  <div class="sales-data">
-    <div class="sales-data-chart-wrap">
-      <div class="sales-data-title">访问数据</div>
-      <div id="sales-data-chart" class="sales-data-chart" ref="refCharts"></div>
+  <div class="visits-data">
+    <div class="visits-data-chart-wrap">
+      <div class="visits-data-title">访问数据</div>
+      <div id="visits-data-chart" class="visits-data-chart" ref="refCharts"></div>
     </div>
   </div>
 </template>
@@ -80,24 +80,24 @@ defineExpose({
 </script>
 
 <style lang="less" scoped>
-.sales-data {
+.visits-data {
   display: flex;
   justify-content: space-between;
 
-  .sales-data-title {
+  .visits-data-title {
     color: rgba(0, 0, 0, 0.85);
     font-weight: bold;
     font-size: 14px;
     margin-bottom: 20px;
   }
-  .sales-data-chart-wrap {
+  .visits-data-chart-wrap {
     flex: 1;
 
-    .sales-data-chart {
+    .visits-data-chart {
       height: 320px;
     }
   }
-  .sales-data-ranking-wrap {
+  .visits-data-ranking-wrap {
     flex-shrink: 0;
     width: 350px;
     margin-left: 60px;

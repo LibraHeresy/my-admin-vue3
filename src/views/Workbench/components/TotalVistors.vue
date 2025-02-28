@@ -1,11 +1,11 @@
 <template>
   <MyCard title="总访客数">
     <template #number>
-      <span>{{ info.totalVisitors.toLocaleString() }}</span>
+      <span>{{ info.totalVistors.toLocaleString() }}</span>
     </template>
     <div id="total-visitors-chart" class="total-visitors-chart"></div>
     <template #desc>
-      <span>每日访客数 {{ info.todayVisitors.toLocaleString() }}</span>
+      <span>每日访客数 {{ info.todayVistors.toLocaleString() }}</span>
     </template>
   </MyCard>
 </template>

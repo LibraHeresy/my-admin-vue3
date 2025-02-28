@@ -36,7 +36,7 @@
   <div class="my-workbench" v-else>
     <div class="desc-cards">
       <TotalSales class="desc-card" :info="info" />
-      <TotalVisitors ref="refTotalVisitors" class="desc-card" :info="info" />
+      <TotalVistors ref="refTotalVistors" class="desc-card" :info="info" />
       <TotalOrders ref="refTotalOrders" class="desc-card" :info="info" />
       <TotalProgress class="desc-card" :info="info" />
     </div>
@@ -62,9 +62,9 @@ class CreateInfo {
     // 销售额下降率
     this.salesDecreasePrecent = 50;
     // 总访客数
-    this.totalVisitors = 830355;
+    this.totalVistors = 830355;
     // 今日访客数
-    this.todayVisitors = 93036;
+    this.todayVistors = 93036;
     // 7天访客数
     this.past7daysVisitors = [
       {
@@ -130,13 +130,13 @@ import OnlineTopSearch from "./components/OnlineTopSearch.vue";
 import ProportionOfSales from "./components/ProportionOfSales.vue";
 import { getWorkbenchData } from "@/api/common";
 import TotalSales from "./components/TotalSales.vue";
-import TotalVisitors from "./components/TotalVisitors.vue";
+import TotalVistors from "./components/TotalVistors.vue";
 import TotalOrders from "./components/TotalOrders.vue";
 import TotalProgress from "./components/TotalProgress.vue";
 
 let info = reactive(new CreateInfo());
 let isLoading = ref(true);
-const refTotalVisitors = useTemplateRef("refTotalVisitors");
+const refTotalVistors = useTemplateRef("refTotalVistors");
 const refTotalOrders = useTemplateRef("refTotalOrders");
 
 onMounted(() => {
@@ -156,8 +156,8 @@ onMounted(() => {
 });
 
 const renderChart = () => {
-  if (refTotalVisitors.value && refTotalOrders.value) {
-    refTotalVisitors.value.renderChart();
+  if (refTotalVistors.value && refTotalOrders.value) {
+    refTotalVistors.value.renderChart();
     refTotalOrders.value.renderChart();
   } else {
     setTimeout(() => {
