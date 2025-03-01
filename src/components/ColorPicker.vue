@@ -14,6 +14,9 @@
       }"
       @click="handleClick"
     />
+    <div class="color-picker-text">
+      {{ value }}
+    </div>
   </div>
 </template>
 
@@ -60,6 +63,7 @@ const handleInput = throttle((e) => {
     height: 24px;
     cursor: pointer;
     border: 1px solid #ccc;
+    margin-right: 4px;
     border-radius: 4px;
   }
   .color-picker-text {
