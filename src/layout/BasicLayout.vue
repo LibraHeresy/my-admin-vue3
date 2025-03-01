@@ -295,7 +295,7 @@ const logout = () => {
 .dropdown-icon {
   font-size: 18px;
   line-height: 64px;
-  padding: 0px 14px;
+  padding: 14px;
   cursor: pointer;
   transition: color 0.3s;
 }
