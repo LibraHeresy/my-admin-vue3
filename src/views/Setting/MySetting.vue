@@ -32,23 +32,44 @@ let activeKey = ref("1");
 let menus = [
   {
     key: "1",
-    icon: () => h(UserOutlined),
+    icon: UserOutlined,
     title: "个人信息",
-    components: () => h(PersonInfo),
+    components: PersonInfo,
   },
   {
     key: "2",
-    icon: () => h(SettingOutlined),
+    icon: SettingOutlined,
     title: "自定义设置",
-    components: () => h(CustomSetting),
+    components: CustomSetting,
   },
 ];
 
-const menu = computed(() => {
-  return menus.find((item) => item.key === activeKey.value);
+interface MenuItemImpl {
+  key: string;
+  icon: any;
+  title: string;
+  components: any;
+}
+
+class MenuItem implements MenuItemImpl {
+  key: string;
+  icon: any;
+  title: string;
+  components: any;
+
+  constructor() {
+    this.key = '';
+    this.icon = null;
+    this.title = '';
+    this.components = null;
+  }
+}
+
+const menu = computed((): MenuItemImpl => {
+  return menus.find((item) => item.key === activeKey.value) || new MenuItem();
 });
 
-const handleMenuSelect = (e) => {
+const handleMenuSelect = (e: { key: string  }) => {
   activeKey.value = e.key;
 };
 </script>

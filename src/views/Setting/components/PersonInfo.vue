@@ -63,6 +63,10 @@
 
 <script setup lang="ts">
 class CreateInfo {
+  nickname: string;
+  profile: string;
+  email: string;
+
   constructor() {
     this.nickname = "战斗机"; // 昵称
     this.profile = "飞一般的感觉"; // 个人简介
@@ -71,6 +75,10 @@ class CreateInfo {
 }
 
 class CreateRuleForm {
+  nickname: string;
+  profile: string;
+  email: string;
+
   constructor() {
     this.nickname = ""; // 昵称
     this.profile = ""; // 个人简介
@@ -78,14 +86,14 @@ class CreateRuleForm {
   }
 }
 
-import { ref, useTemplateRef } from "vue";
+import { ref } from "vue";
 
-const isValidEmail = (email) => {
+const isValidEmail = (email: string) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 };
 
-let checkEmail = (rule, value, callback) => {
+let checkEmail = (rule: any, value: string, callback: any) => {
   if (!isValidEmail(value)) {
     return callback(new Error("请输入正确的邮箱地址"));
   } else {
@@ -96,7 +104,7 @@ let checkEmail = (rule, value, callback) => {
 let isEdit = ref(false);
 let info = ref(new CreateInfo());
 let ruleForm = ref(new CreateRuleForm());
-const refRuleForm = useTemplateRef("refRuleForm");
+const refRuleForm = ref();
 const layout = {
   labelCol: { span: 4 },
   wrapperCol: { span: 24 },

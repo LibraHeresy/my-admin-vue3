@@ -33,7 +33,7 @@ import { useStore } from "@/store/theme";
 const themeStore = useStore();
 const { theme, color } = storeToRefs(themeStore);
 
-const handleSwitchChange = (checked) => {
+const handleSwitchChange = (checked: boolean) => {
   if (checked) {
     themeStore.setTheme("dark");
   } else {
@@ -41,7 +41,7 @@ const handleSwitchChange = (checked) => {
   }
 };
 
-const updateThemeColor = (color) => {
+const updateThemeColor = (color: string) => {
   themeStore.setColor(color);
 };
 </script>
