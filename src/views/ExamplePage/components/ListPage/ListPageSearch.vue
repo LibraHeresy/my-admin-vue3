@@ -92,7 +92,7 @@
   </a-form>
 </template>
 
-<script setup>
+<script setup lang="ts">
 class CreateRuleForm {
   constructor() {
     // 订单号

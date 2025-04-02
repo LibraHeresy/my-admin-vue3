@@ -28,6 +28,6 @@
   </a-sub-menu>
 </template>
 
-<script setup>
+<script setup lang="ts">
 const props = defineProps(["menuInfo", "collapsed"]);
 </script>

@@ -1,13 +1,13 @@
 <template>
   <a-config-provider
-    :locale="dict[locale]"
+    :locale="dict[safeLocale]"
     :theme="{ token: { colorPrimary: color } }"
   >
     <RouterView />
   </a-config-provider>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import enUS from "ant-design-vue/es/locale/en_US";
 import zhCN from "ant-design-vue/es/locale/zh_CN";
 import dayjs from "dayjs";
@@ -15,16 +15,27 @@ import "dayjs/locale/zh-cn";
 import { useI18n } from "vue-i18n";
 import { storeToRefs } from "pinia";
 import { useStore } from "@/store/theme";
+import { computed } from "vue";
+
+// 定义 locale 的合法取值范围
+type LocaleKey = keyof typeof dict;
 
 const { locale } = useI18n();
 const dict = {
   enUS,
   zhCN,
-};
+} as const; // 使用 as const 确保 dict 的键为字面量类型
+
 const themeStore = useStore();
 const { color } = storeToRefs(themeStore);
 
-dayjs.locale(locale.value);
+// 确保 safeLocale 的类型为 LocaleKey
+const safeLocale = computed<LocaleKey>(() => {
+  const currentLocale = locale.value as string;
+  return (currentLocale in dict ? currentLocale : "enUS") as LocaleKey;
+});
+
+dayjs.locale(safeLocale.value);
 </script>
 
 <style scoped>

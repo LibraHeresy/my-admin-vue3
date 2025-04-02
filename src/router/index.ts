@@ -1,4 +1,4 @@
-import { createWebHashHistory, createRouter } from 'vue-router'
+import { createWebHashHistory, createRouter } from "vue-router";
 import BasicLayout from "@/layout/BasicLayout.vue";
 import ComponentRepository from "./module/example-page";
 import ExceptionPage from "./module/exception-page";
@@ -43,7 +43,7 @@ const routes = [
       import(/* webpackChunkName: "common" */ "@/views/Login/MyLogin.vue"),
   },
   {
-    path: '/:catchAll(.*)',
+    path: "/:catchAll(.*)",
     name: "AllNotFound",
     hideInMenu: true,
     component: () =>

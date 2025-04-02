@@ -19,6 +19,7 @@
 + 持久化
 + Mock
 + Lodash
++ TypeScript
 
 ## 安装环境
 

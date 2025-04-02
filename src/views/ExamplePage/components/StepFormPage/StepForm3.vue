@@ -29,7 +29,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { storeToRefs } from "pinia";
 import { useStore } from "@/store/step";
 import { useRouter } from "vue-router";

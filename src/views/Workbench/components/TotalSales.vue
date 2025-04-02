@@ -19,7 +19,7 @@
   </MyCard>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import MyCard from "./MyCard.vue";
 import { computed } from "vue";
 import { CaretUpOutlined, CaretDownOutlined } from "@ant-design/icons-vue";

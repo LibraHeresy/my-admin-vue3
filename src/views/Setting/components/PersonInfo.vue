@@ -61,7 +61,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 class CreateInfo {
   constructor() {
     this.nickname = "战斗机"; // 昵称

@@ -25,7 +25,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import ColorPicker from "@/components/ColorPicker.vue";
 import { storeToRefs } from "pinia";
 import { useStore } from "@/store/theme";

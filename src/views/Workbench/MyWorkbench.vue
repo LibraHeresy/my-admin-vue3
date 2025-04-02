@@ -50,7 +50,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 class CreateInfo {
   constructor() {
     // 销售总额

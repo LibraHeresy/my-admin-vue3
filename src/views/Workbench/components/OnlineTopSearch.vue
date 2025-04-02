@@ -32,7 +32,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import * as echarts from "echarts/core";
 import { GridComponent } from "echarts/components";
 import { LineChart } from "echarts/charts";

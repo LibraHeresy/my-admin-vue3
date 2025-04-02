@@ -34,19 +34,21 @@
   </a-form>
 </template>
 
-<script setup>
+<script setup lang="ts">
 class CreateRuleForm {
+  paySecret: string;
+
   constructor() {
     // 付款账户
     this.paySecret = "123456";
   }
 }
 
-import { useTemplateRef, ref } from "vue";
+import { ref } from "vue";
 import { storeToRefs } from "pinia";
 import { useStore } from "@/store/step";
 
-const refRuleForm = useTemplateRef("refRuleForm");
+const refRuleForm = ref();
 const stepStore = useStore();
 const { step, transferInfo } = storeToRefs(stepStore);
 const ruleForm = ref(new CreateRuleForm());

@@ -65,8 +65,8 @@
   </div>
 </template>
 
-<script setup>
-import { ref, computed, useTemplateRef, h } from "vue";
+<script setup lang="ts">
+import { ref, computed, h } from "vue";
 import { ListPageColumns } from "../../configs/config";
 import { ListPageData } from "../../configs/data";
 import AddOrderModal from "./AddOrderModal.vue";
@@ -76,7 +76,7 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 const { setOrder } = useStore();
-const refAddOrderModal = useTemplateRef("refAddOrderModal");
+const refAddOrderModal = ref();
 let tableData = ref([...ListPageData]);
 const columns = ref([...ListPageColumns]);
 let selectedRowKeys = ref([]);

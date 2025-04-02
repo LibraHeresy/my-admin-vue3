@@ -7,7 +7,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import * as echarts from "echarts/core";
 import { TooltipComponent, GridComponent } from "echarts/components";
 import { BarChart } from "echarts/charts";

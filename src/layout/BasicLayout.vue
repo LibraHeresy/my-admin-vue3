@@ -119,7 +119,7 @@
     </a-layout>
   </a-layout>
 </template>
-<script setup>
+<script setup lang="ts">
 import SubMenu from "./SubMenu.vue";
 import { ref, watch } from "vue";
 import { storeToRefs } from "pinia";

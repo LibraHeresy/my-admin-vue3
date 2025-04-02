@@ -69,8 +69,17 @@
   </a-modal>
 </template>
 
-<script setup>
+<script setup lang="ts">
 class CreateRuleForm {
+  orderAmount: number | undefined;
+  orderType: number | undefined;
+  worker: string;
+  orderPayment: number | undefined;
+  desc: string;
+  orderStatus: string;
+  orderDate: string;
+  orderNo: string;
+
   constructor() {
     // 订单金额
     this.orderAmount = undefined;
@@ -82,17 +91,23 @@ class CreateRuleForm {
     this.orderPayment = undefined;
     // 备注
     this.desc = "";
+    // 订单状态
+    this.orderStatus = "";
+    // 订单日期
+    this.orderDate = "";
+    // 订单编号
+    this.orderNo = "";
   }
 }
 
 import { OrderTypeDict, OrderPayMentDict } from "../../configs/dict";
 import MyEditor from "@/components/MyEditor.vue";
 import moment from "moment";
-import { ref, useTemplateRef, defineExpose, defineEmits } from "vue";
+import { ref, defineExpose, defineEmits } from "vue";
 
 const emits = defineEmits(["submit"]);
 
-const refRuleForm = useTemplateRef("refRuleForm");
+const refRuleForm = ref();
 const visible = ref(false);
 const isLoading = ref(false);
 const ruleForm = ref(new CreateRuleForm());
@@ -149,8 +164,8 @@ const handleSubmit = () => {
       isLoading.value = false;
       visible.value = false;
       ruleForm.value.orderStatus = "待支付";
-      ruleForm.value.orderAmount = Number(ruleForm.value.orderAmount).toFixed(
-        2
+      ruleForm.value.orderAmount = Number(
+        Number(ruleForm.value.orderAmount).toFixed(2)
       );
       ruleForm.value.orderDate = moment().format("YYYY-MM-DD");
       ruleForm.value.orderNo = `${moment().format("YYYYMMDD")}-${Math.floor(

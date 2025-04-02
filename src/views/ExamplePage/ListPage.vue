@@ -5,14 +5,14 @@
   </a-card>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import ListPageSearch from "./components/ListPage/ListPageSearch.vue";
 import ListPageTable from "./components/ListPage/ListPageTable.vue";
-import { useTemplateRef } from "vue";
+import { ref } from "vue";
 
-const refListPageTable = useTemplateRef("refListPageTable");
+const refListPageTable = ref();
 
-const handleSearch = (value) => {
+const handleSearch = (value: object) => {
   refListPageTable.value.handleSearch(value);
 };
 

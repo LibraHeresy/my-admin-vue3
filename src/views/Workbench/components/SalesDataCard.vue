@@ -23,7 +23,7 @@
   </a-card>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import SalesData from "./SalesData.vue";
 import VisitsData from "./VisitsData.vue";
 import moment from "moment";

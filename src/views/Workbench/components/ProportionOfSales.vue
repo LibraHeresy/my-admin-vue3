@@ -11,7 +11,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import * as echarts from "echarts/core";
 import { TooltipComponent, LegendComponent } from "echarts/components";
 import { PieChart } from "echarts/charts";

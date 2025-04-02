@@ -17,7 +17,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { defineEmits, ref, shallowRef, onBeforeUnmount } from "vue";
 import { Editor, Toolbar } from "@wangeditor/editor-for-vue";
 

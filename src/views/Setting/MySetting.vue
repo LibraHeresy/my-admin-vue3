@@ -20,7 +20,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import PersonInfo from "./components/PersonInfo.vue";
 import CustomSetting from "./components/CustomSetting.vue";
 import { SettingOutlined, UserOutlined } from "@ant-design/icons-vue";

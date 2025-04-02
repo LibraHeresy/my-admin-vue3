@@ -26,7 +26,6 @@
       <a-input
         v-model:value="ruleForm.transferAmount"
         type="number"
-        :maxLength="20"
       />
     </a-form-item>
     <a-form-item :wrapper-col="{ span: 14, offset: 6 }">
@@ -35,25 +34,30 @@
   </a-form>
 </template>
 
-<script setup>
+<script setup lang="ts">
+import { ref, onMounted } from "vue";
+import { storeToRefs } from "pinia";
+import { useStore, TransferInfo } from "@/store/step";
+
 class CreateRuleForm {
+  paymentAccount: string;
+  receiverAccount: string;
+  receiver: string;
+  transferAmount: number;
+
   constructor() {
     // 付款账户
-    this.paymentAccount = undefined;
+    this.paymentAccount = '';
     // 收款账户
     this.receiverAccount = "test@example.com";
     // 收款人姓名
     this.receiver = "Alex";
     // 转账金额
-    this.transferAmount = "100.00";
+    this.transferAmount = 100.00;
   }
 }
 
-import { ref, onMounted, useTemplateRef } from "vue";
-import { storeToRefs } from "pinia";
-import { useStore } from "@/store/step";
-
-const refRuleForm = useTemplateRef("refRuleForm");
+const refRuleForm = ref();
 const stepStore = useStore();
 const { step, transferInfo } = storeToRefs(stepStore);
 const ruleForm = ref(new CreateRuleForm());
@@ -92,16 +96,15 @@ const rules = {
   ],
 };
 
-
 onMounted(() => {
   if (transferInfo.value) {
-    ruleForm.value = transferInfo.value;
+    ruleForm.value = { ...transferInfo.value, transferAmount: parseFloat(String(transferInfo.value.transferAmount)) };
   }
 });
 
 const onSubmit = () => {
   refRuleForm.value.validate().then(() => {
-    stepStore.setTransferInfo({ ...ruleForm.value });
+    stepStore.setTransferInfo({ ...ruleForm.value } as TransferInfo);
     stepStore.setStep(step.value + 1);
   });
 };

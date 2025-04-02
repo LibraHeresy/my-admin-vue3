@@ -45,7 +45,7 @@
   </a-card>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { storeToRefs } from "pinia";
 import { useStore } from "@/store/order";
 

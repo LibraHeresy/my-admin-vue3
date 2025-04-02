@@ -16,7 +16,7 @@
   </a-card>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import StepForm1 from "./components/StepFormPage/StepForm1.vue";
 import StepForm2 from "./components/StepFormPage/StepForm2.vue";
 import StepForm3 from "./components/StepFormPage/StepForm3.vue";
