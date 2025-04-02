@@ -41,10 +41,10 @@ import { CanvasRenderer } from "echarts/renderers";
 echarts.use([GridComponent, LineChart, CanvasRenderer, UniversalTransition]);
 
 import moment from "moment";
-import { reactive, onMounted, onBeforeUnmount } from "vue";
+import { ref, onMounted, onBeforeUnmount } from "vue";
 import { CaretUpOutlined } from "@ant-design/icons-vue";
 
-let myCharts = reactive([]);
+let myCharts = ref<echarts.ECharts[]>([]);
 const today = moment();
 const columns = [
   {
@@ -112,7 +112,7 @@ let data = [
 data = data.concat(
   data.map((item) => ({
     ...item,
-    rank: +item.rank + 5,
+    rank: String(Number(item.rank) + 5),
   }))
 );
 const chartOption = {
@@ -168,22 +168,28 @@ const chartOption = {
 onMounted(() => {
   setTimeout(() => {
     renderChart();
-  });
+  }, 0); // 确保 DOM 已渲染完成
 });
 
 onBeforeUnmount(() => {
-  // 销毁 echarts
-  myCharts.forEach((item) => {
-    item.dispose();
+  myCharts.value.forEach((chart) => {
+    if (chart) {
+      chart.dispose();
+    }
   });
 });
 
 const renderChart = () => {
-  if (myCharts.length < 1 || !myCharts.every((item) => item)) {
-    const chartDomOne = document.getElementById("online-top-search-chart-one");
-    myCharts[0] = echarts.init(chartDomOne);
+  const chartDomOne = document.getElementById("online-top-search-chart-one");
+  if (!chartDomOne) {
+    console.error("图表容器未找到，请检查 DOM 结构");
+    return;
   }
-  myCharts[0].setOption(chartOption);
+
+  if (!myCharts.value[0]) {
+    myCharts.value[0] = echarts.init(chartDomOne);
+  }
+  myCharts.value[0].setOption(chartOption);
 };
 </script>
 

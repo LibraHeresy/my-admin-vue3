@@ -1,17 +1,17 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import notification from "ant-design-vue/es/notification";
 
 // 创建 axios 实例
 const request = axios.create({
   // API 请求的默认前缀
-  baseURL: import.meta.env.VUE_APP_API_BASE_URL,
+  baseURL: '',
   timeout: 6000, // 请求超时时间
 });
 
 // 异常拦截处理器
-const errorHandler = (error) => {
+const errorHandler = (error: AxiosError) => {
   if (error.response) {
-    const data = error.response.data;
+    const data = error.response.data as ResponseData;
     // 从 localstorage 获取 token
     const token = localStorage.getItem("ACCESS_TOKEN");
     if (error.response.status === 403) {
@@ -20,10 +20,7 @@ const errorHandler = (error) => {
         description: data.message,
       });
     }
-    if (
-      error.response.status === 401 &&
-      !(data.result && data.result.isLogin)
-    ) {
+    if (error.response.status === 401) {
       notification.error({
         message: "Unauthorized",
         description: "Authorization verification failed",

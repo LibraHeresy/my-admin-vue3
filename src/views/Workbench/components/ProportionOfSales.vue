@@ -27,7 +27,7 @@ echarts.use([
 
 import { ref, onMounted, onBeforeUnmount } from "vue";
 
-let myChart = ref(null);
+let myChart = ref<echarts.ECharts>();
 const chartOption = {
   tooltip: {
     trigger: "item",

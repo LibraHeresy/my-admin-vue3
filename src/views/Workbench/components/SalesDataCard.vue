@@ -3,7 +3,7 @@
     style="width: 100%; border-radius: 10px"
     :tab-list="tabList"
     :active-tab-key="tab"
-    @tabChange="(key) => onTabChange(key)"
+    @tabChange="(key: string) => onTabChange(key)"
   >
     <SalesData ref="refSalesData" v-if="tab === 'sales'" />
     <VisitsData ref="refSalesData" v-if="tab === 'visits'" />
@@ -27,10 +27,10 @@
 import SalesData from "./SalesData.vue";
 import VisitsData from "./VisitsData.vue";
 import moment from "moment";
-import { ref, reactive, useTemplateRef } from "vue";
+import { ref, reactive } from "vue";
 
-let dateRange = reactive([]);
-const refSalesData = useTemplateRef("refSalesData");
+let dateRange = reactive<Array<string>>([]);
+const refSalesData = ref();
 let tab = ref("sales");
 let dateFormat = "YYYY-MM-DD";
 const tabList = [
@@ -62,7 +62,7 @@ const dateList = [
   },
 ];
 
-const onTabChange = (key) => {
+const onTabChange = (key: string) => {
   tab.value = key;
 
   setTimeout(() => {
@@ -71,7 +71,7 @@ const onTabChange = (key) => {
 };
 onTabChange(tab.value);
 
-const handleDateClick = (key) => {
+const handleDateClick = (key: string) => {
   dateRange[1] = moment().format(dateFormat);
 
   switch (key) {

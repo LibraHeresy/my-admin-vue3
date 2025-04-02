@@ -16,7 +16,7 @@ echarts.use([GridComponent, BarChart, CanvasRenderer, TooltipComponent]);
 
 import { ref, onBeforeUnmount } from "vue";
 
-let myChart = ref(null);
+let myChart = ref<echarts.ECharts>();
 const chartOption = {
   tooltip: {
     trigger: "axis",

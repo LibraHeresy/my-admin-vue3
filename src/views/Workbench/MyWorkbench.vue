@@ -52,6 +52,19 @@
 
 <script setup lang="ts">
 class CreateInfo {
+  totalSales: number;
+  todaySales: number;
+  salesIncreasePrecent: number;
+  salesDecreasePrecent: number;
+  totalVistors: number;
+  todayVistors: number;
+  past7daysVisitors: Array<{ visitors: number }>;
+  totalOrders: number;
+  todayOrders: number;
+  past7daysOrders: Array<{ orders: number }>;
+  totalProgress: number;
+  todayProcess: number;
+
   constructor() {
     // 销售总额
     this.totalSales = 1021214;

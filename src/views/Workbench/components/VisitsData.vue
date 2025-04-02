@@ -14,10 +14,10 @@ import { BarChart } from "echarts/charts";
 import { CanvasRenderer } from "echarts/renderers";
 echarts.use([GridComponent, BarChart, CanvasRenderer, TooltipComponent]);
 
-import { ref, onBeforeUnmount, useTemplateRef } from "vue";
+import { ref, onBeforeUnmount } from "vue";
 
-let myChart = ref(null);
-let refCharts = useTemplateRef("refCharts");
+let myChart = ref<echarts.ECharts>();
+let refCharts = ref();
 const chartOption = {
   tooltip: {
     trigger: "axis",

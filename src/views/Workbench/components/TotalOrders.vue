@@ -29,7 +29,7 @@ const props = defineProps({
   },
 });
 
-let myChart = ref(null);
+let myChart = ref<echarts.ECharts>();
 const today = moment();
 const chartOption = {
   tooltip: {
@@ -83,7 +83,7 @@ const renderChart = () => {
     myChart.value = echarts.init(chartDom);
   }
   chartOption.series[0].data =
-    props.info?.past7daysOrders.map((item) => item.orders) || [];
+    props.info?.past7daysOrders.map((item: { orders: Array<string> }) => item.orders) || [];
   myChart.value.setOption(chartOption);
 };
 
