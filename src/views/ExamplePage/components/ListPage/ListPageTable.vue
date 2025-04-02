@@ -42,7 +42,7 @@
       :loading="isLoading"
       rowKey="orderNo"
     >
-      <template #bodyCell="{ column, text, index }">
+      <template #bodyCell="{ column, text, index, record }">
         <template v-if="column.dataIndex === 'index'">
           <span>
             {{ index + 1 }}

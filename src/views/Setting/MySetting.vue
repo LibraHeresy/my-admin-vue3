@@ -32,15 +32,15 @@ let activeKey = ref("1");
 let menus = [
   {
     key: "1",
-    icon: () => h(UserOutlined),
+    icon: UserOutlined,
     title: "个人信息",
-    components: () => h(PersonInfo),
+    components: PersonInfo,
   },
   {
     key: "2",
-    icon: () => h(SettingOutlined),
+    icon: SettingOutlined,
     title: "自定义设置",
-    components: () => h(CustomSetting),
+    components: CustomSetting,
   },
 ];
 
