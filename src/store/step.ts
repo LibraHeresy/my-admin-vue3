@@ -12,7 +12,7 @@ interface StateImpl {
   transferInfo: TransferInfo;
 }
 
-class TransferInfo implements TransferInfoImpl {
+export class TransferInfo implements TransferInfoImpl {
   paymentAccount: string;
   receiverAccount: string;
   receiver: string;

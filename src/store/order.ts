@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-interface OrderImpl {
+export interface OrderImpl {
   orderNo: string;
   orderAmount: string;
   orderStatus: string;
@@ -8,6 +8,7 @@ interface OrderImpl {
   orderType: string;
   worker: string;
   orderPayment: string;
+  desc: string;
 }
 
 interface StateImpl {
@@ -22,6 +23,7 @@ class Order implements OrderImpl {
   orderType: string;
   worker: string;
   orderPayment: string;
+  desc: string;
 
   constructor() {
     this.orderNo = "20200801-0003";
@@ -31,6 +33,7 @@ class Order implements OrderImpl {
     this.orderType = "采购单";
     this.worker = "王五";
     this.orderPayment = "支付宝";
+    this.desc = "备注";
   }
 }
 

@@ -22,13 +22,13 @@ import StepForm2 from "./components/StepFormPage/StepForm2.vue";
 import StepForm3 from "./components/StepFormPage/StepForm3.vue";
 import { onMounted } from "vue";
 import { storeToRefs } from "pinia";
-import { useStore } from "@/store/step";
+import { useStore, TransferInfo } from "@/store/step";
 
 const stepStore = useStore();
 const { step } = storeToRefs(stepStore);
 
 onMounted(() => {
-  stepStore.setTransferInfo(null);
+  stepStore.setTransferInfo(new TransferInfo());
   stepStore.setStep(0);
 });
 </script>

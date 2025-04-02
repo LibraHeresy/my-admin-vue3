@@ -137,7 +137,7 @@ class CreateInfo {
   }
 }
 
-import { ref, reactive, useTemplateRef, onMounted } from "vue";
+import { ref, reactive, onMounted } from "vue";
 import SalesDataCard from "./components/SalesDataCard.vue";
 import OnlineTopSearch from "./components/OnlineTopSearch.vue";
 import ProportionOfSales from "./components/ProportionOfSales.vue";
@@ -149,8 +149,8 @@ import TotalProgress from "./components/TotalProgress.vue";
 
 let info = reactive(new CreateInfo());
 let isLoading = ref(true);
-const refTotalVistors = useTemplateRef("refTotalVistors");
-const refTotalOrders = useTemplateRef("refTotalOrders");
+const refTotalVistors = ref();
+const refTotalOrders = ref();
 
 onMounted(() => {
   getWorkbenchData({}).then((res) => {

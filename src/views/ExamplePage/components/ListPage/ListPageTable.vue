@@ -42,7 +42,7 @@
       :loading="isLoading"
       rowKey="orderNo"
     >
-      <template #bodyCell="{ column, text, index }">
+      <template #bodyCell="{ text, record, index, column }">
         <template v-if="column.dataIndex === 'index'">
           <span>
             {{ index + 1 }}
@@ -71,7 +71,7 @@ import { ListPageColumns } from "../../configs/config";
 import { ListPageData } from "../../configs/data";
 import AddOrderModal from "./AddOrderModal.vue";
 import { PlusOutlined, CloseOutlined } from "@ant-design/icons-vue";
-import { useStore } from "@/store/order";
+import { useStore, OrderImpl } from "@/store/order";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
@@ -79,7 +79,7 @@ const { setOrder } = useStore();
 const refAddOrderModal = ref();
 let tableData = ref([...ListPageData]);
 const columns = ref([...ListPageColumns]);
-let selectedRowKeys = ref([]);
+let selectedRowKeys = ref<Array<string>>([]);
 let isLoading = ref(false);
 
 const hasSelected = computed(() => selectedRowKeys.value.length > 0);
@@ -88,7 +88,7 @@ const message = computed(() => {
   return `${selectedRowKeys.value.length || 0} 条数据已选择`;
 });
 
-const onSelectChange = (tableSelectedRowKeys) => {
+const onSelectChange = (tableSelectedRowKeys: Array<string>) => {
   selectedRowKeys.value = tableSelectedRowKeys;
 };
 
@@ -107,14 +107,23 @@ const handleDelete = () => {
   handleResetSelected();
 };
 
-const handleSearch = (value) => {
+interface SearchValue {
+  [key: string]: string;
+  orderNo: string;
+  orderStatus: string;
+  orderType: string;
+  worker: string;
+  orderPayment: string;
+}
+
+const handleSearch = (value: SearchValue) => {
   isLoading.value = true;
   setTimeout(() => {
     Object.keys(value).map((key) => {
       if (value[key]) {
         if (typeof value[key] === "string") {
           tableData.value = tableData.value.filter((item) =>
-            item[key].includes(value[key])
+            item[key]?.includes(value[key])
           );
         } else if (typeof value[key] === "number") {
           tableData.value = tableData.value.filter(
@@ -131,7 +140,7 @@ const handleReset = () => {
   tableData.value = [...ListPageData];
 };
 
-const toDetailPage = (order) => {
+const toDetailPage = (order: OrderImpl) => {
   setOrder(order);
   router.push({
     name: "DetailPage",

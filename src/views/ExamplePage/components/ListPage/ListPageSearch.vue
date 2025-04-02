@@ -94,6 +94,12 @@
 
 <script setup lang="ts">
 class CreateRuleForm {
+  orderNo: string;
+  orderStatus: string | undefined;
+  orderType: string | undefined;
+  worker: string;
+  orderPayment: string | undefined;
+
   constructor() {
     // 订单号
     this.orderNo = "";

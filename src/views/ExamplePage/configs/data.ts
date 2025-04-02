@@ -1,4 +1,16 @@
-export const ListPageData = [
+interface ListPageDataImpl {
+  [key: string]: string | undefined;
+  orderNo: string;
+  orderAmount: string;
+  orderStatus: string;
+  orderDate: string;
+  orderType: string;
+  worker: string;
+  orderPayment: string;
+  desc?: string;
+}
+
+export const ListPageData: Array<ListPageDataImpl> = [
   {
     orderNo: "20200801-0001",
     orderAmount: "100.00",
