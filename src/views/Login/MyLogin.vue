@@ -58,13 +58,16 @@
 
 <script setup lang="ts">
 class CreateRuleForm {
+  account: string;
+  password: string;
+
   constructor() {
     this.account = "";
     this.password = "";
   }
 }
 
-import { useTemplateRef, reactive } from "vue";
+import { ref, reactive } from "vue";
 import { UserOutlined, LockOutlined } from "@ant-design/icons-vue";
 import { message } from "ant-design-vue";
 import { useRouter } from "vue-router";
@@ -72,7 +75,7 @@ import { useRouter } from "vue-router";
 const [messageApi, contextHolder] = message.useMessage();
 const router = useRouter();
 let ruleForm = reactive(new CreateRuleForm());
-const refRuleForm = useTemplateRef("refRuleForm");
+const refRuleForm = ref();
 
 const layout = {
   labelCol: { span: 0 },
